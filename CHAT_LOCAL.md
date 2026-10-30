@@ -4,7 +4,7 @@ Execute `node servidor-local.mjs` nesta pasta e abra <http://127.0.0.1:4173>. No
 
 Sem o servidor ou com a opção desmarcada, o chat usa respostas prontas. Com a IA ativa, cada pergunta é enviada ao servidor e ao Ollama locais, sem histórico de turnos; não envie dados pessoais, senhas ou informações médicas. O código do portal não armazena conversas; isso não garante a política de logs de outros componentes instalados.
 
-A IA consulta uma **base de trechos oficiais revisados** (`base-oficial.json`) com busca local (SQLite FTS5), atualmente com 11 trechos de ingresso, documentos, calendários e contatos da ProGrad. Ela **não lê editais nem páginas na internet**, não acessa arquivos, shell, navegação livre nem edição do site. Para prazos e requisitos, o chat mostra os trechos e alerta que não comprovam o seu caso; confirme no documento oficial vigente.
+A IA consulta uma **base de trechos oficiais e material do usuário** (`base-oficial.json`) com busca local (SQLite FTS5), atualmente com 167 trechos: 11 de fontes oficiais da ProGrad (ingresso, documentos, calendários, contatos) e 156 de material do usuário extraído de designs do Canva (@mundouniversitariouf). Cada fonte exibe se é **Oficial (ProGrad)** ou **Material do usuário (Canva)**. A IA **não lê editais nem páginas na internet**, não acessa arquivos, shell, navegação livre nem edição do site. Para prazos e requisitos, o chat mostra os trechos e alerta que não comprovam o seu caso; confirme no documento oficial vigente.
 
 Cada fonte exibe título, órgão, URL, data de verificação e, quando disponível, o excerto usado. Se não houver evidência na base, o chat encaminha para atendimento humano.
 

@@ -878,7 +878,7 @@ function initChat() {
     const wrapper = document.createElement("div");
     wrapper.className = "chat-sources";
     const heading = document.createElement("strong");
-    heading.textContent = mode === "sem-evidencia" ? "Atendimento:" : "Fontes oficiais (base experimental):";
+    heading.textContent = mode === "sem-evidencia" ? "Atendimento:" : "Fontes (base experimental):";
     wrapper.appendChild(heading);
     if (mode === "sem-evidencia") {
       const p = document.createElement("p");
@@ -893,15 +893,18 @@ function initChat() {
         if (!source || typeof source.url !== "string") return;
         try {
           const url = new URL(source.url);
-          if (url.protocol !== "https:" || url.hostname !== "prograd.ufabc.edu.br") return;
+          if (url.protocol !== "https:") return;
           const item = document.createElement("div");
           item.className = "chat-source-item";
           const link = document.createElement("a");
           link.href = url.href;
-          link.textContent = source.label || "Fonte oficial";
+          link.textContent = source.label || "Fonte";
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
           const meta = document.createElement("div");
           meta.className = "chat-source-meta";
-          meta.textContent = `${source.organization || ""} · verificada em ${source.verified_at || ""}`;
+          const tipo = source.source_type === "oficial" ? "Oficial (ProGrad)" : "Material do usuário (Canva)";
+          meta.textContent = `${tipo} · ${source.organization || ""} · verificada em ${source.verified_at || ""}`;
           item.appendChild(link);
           item.appendChild(meta);
           if (mode === "trecho-direto" && source.excerpt) {

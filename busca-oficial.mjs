@@ -10,9 +10,13 @@ export function createSearch(records, today = () => new Date().toISOString().sli
   const insert = db.prepare('INSERT INTO trechos (id, title, excerpt, keywords) VALUES (?, ?, ?, ?)');
   const byId = new Map();
   for (const record of records) {
-    if (!record || !['id', 'title', 'excerpt', 'keywords', 'organization', 'url', 'verified_at', 'review_after', 'status'].every(key => typeof record[key] === 'string') || !/^[a-z0-9-]+$/.test(record.id) || byId.has(record.id) || record.status !== 'experimental' || !/^\d{4}-\d{2}-\d{2}$/.test(record.review_after)) throw new Error('Trecho inválido');
+    const sourceType = record.source_type || 'material_usuario';
+    if (!record || !['id', 'title', 'excerpt', 'keywords', 'organization', 'url', 'verified_at', 'review_after', 'status', 'source_type'].every(key => typeof record[key] === 'string') || !/^[a-z0-9-]+$/i.test(record.id) || byId.has(record.id) || record.status !== 'experimental' || !/^\d{4}-\d{2}-\d{2}$/.test(record.review_after) || !['oficial', 'material_usuario'].includes(sourceType)) throw new Error('Trecho inválido');
     const url = new URL(record.url);
-    if (url.protocol !== 'https:' || url.hostname !== 'prograd.ufabc.edu.br' || url.username || url.password) throw new Error('Fonte inválida');
+    if (url.protocol !== 'https:') throw new Error('Fonte inválida');
+    if (sourceType === 'oficial' && url.hostname !== 'prograd.ufabc.edu.br') throw new Error('Fonte oficial inválida');
+    if (sourceType === 'material_usuario' && url.hostname !== 'www.canva.com' && url.hostname !== 'canva.com') throw new Error('Fonte de material do usuário inválida');
+    if (url.username || url.password) throw new Error('Fonte inválida');
     byId.set(record.id, record);
     insert.run(record.id, record.title, record.excerpt, record.keywords);
   }

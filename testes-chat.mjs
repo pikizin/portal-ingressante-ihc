@@ -15,7 +15,7 @@ test('sem evicência não chama modelo', async () => {
 });
 
 test('recusa ferramenta desconhecida e argumentos herdados', async () => {
-  const search = { search: () => [{ id: 'x', title: 'T', url: 'https://prograd.ufabc.edu.br/sisu', excerpt: 'E', verified_at: '2026-10-29', review_after: '2026-11-12', organization: 'O' }] };
+  const search = { search: () => [{ id: 'x', title: 'T', url: 'https://prograd.ufabc.edu.br/sisu', excerpt: 'E', verified_at: '2026-10-29', review_after: '2026-11-12', organization: 'O', source_type: 'oficial' }] };
   for (const fn of [
     { name: 'executar_shell', arguments: {} },
     { name: 'buscar_trechos_oficiais', arguments: { assunto: 'calendario' } },
@@ -25,12 +25,12 @@ test('recusa ferramenta desconhecida e argumentos herdados', async () => {
 });
 
 test('recusa resposta sem chamada de ferramenta', async () => {
-  const search = { search: () => [{ id: 'x', title: 'T', url: 'https://prograd.ufabc.edu.br/sisu', excerpt: 'E', verified_at: '2026-10-29', review_after: '2026-11-12', organization: 'O' }] };
+  const search = { search: () => [{ id: 'x', title: 'T', url: 'https://prograd.ufabc.edu.br/sisu', excerpt: 'E', verified_at: '2026-10-29', review_after: '2026-11-12', organization: 'O', source_type: 'oficial' }] };
   await assert.rejects(answer('teste', async () => ({ message: { content: 'Resposta sem fonte' } }), search));
 });
 
 test('trecho direto para perguntas de prazo e matrícula', async () => {
-  const search = { search: () => [{ id: 'x', title: 'T', url: 'https://prograd.ufabc.edu.br/sisu', excerpt: 'E', verified_at: '2026-10-29', review_after: '2026-11-12', organization: 'O' }] };
+  const search = { search: () => [{ id: 'x', title: 'T', url: 'https://prograd.ufabc.edu.br/sisu', excerpt: 'E', verified_at: '2026-10-29', review_after: '2026-11-12', organization: 'O', source_type: 'oficial' }] };
   const result = await answer('qual o prazo da matrícula?', async () => ({ message: { content: 'X' } }), search);
   assert.equal(result.mode, 'trecho-direto');
   assert.equal(result.sources.length, 1);
