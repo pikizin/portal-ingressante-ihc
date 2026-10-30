@@ -1,9 +1,25 @@
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync } from 'node:fs';
+import { cosine } from './embeddings.mjs';
 
-const stopwords = new Set(['como', 'onde', 'qual', 'quais', 'quando', 'para', 'pelo', 'pela', 'mais', 'esse', 'essa', 'meus', 'minha', 'preciso', 'quero', 'sobre', 'pode', 'tenho', 'qualquer', 'com', 'que', 'uma', 'dos', 'das', 'por', 'sao', 'tem', 'foi', 'eles', 'estao', 'vou', 'existe']);
+const stopwords = new Set([
+  // palavras funcionais
+  'como', 'onde', 'qual', 'quais', 'quando', 'para', 'pelo', 'pela', 'mais', 'esse', 'essa',
+  'meus', 'minha', 'preciso', 'quero', 'sobre', 'pode', 'tenho', 'qualquer', 'com', 'que',
+  'uma', 'dos', 'das', 'por', 'sao', 'tem', 'foi', 'eles', 'estao', 'vou', 'existe',
+  'meu', 'seu', 'sua', 'sem', 'nao', 'sim', 'muito', 'pouco', 'todo', 'toda', 'todos',
+  'todas', 'outro', 'outra', 'aqui', 'ali', 'la', 'ja', 'gente', 'coisa', 'tipo',
+  // verbos e pedidos genéricos que aparecem em quase todo trecho
+  'funciona', 'funcionam', 'funcionar', 'fazer', 'faz', 'feito', 'saber', 'gostaria',
+  'queria', 'devo', 'deve', 'posso', 'consigo', 'fica', 'ficam', 'pego', 'pegar',
+  'comprar', 'usar', 'uso', 'necessario', 'necessaria', 'obrigatorio', 'obrigatoria',
+  'explicar', 'explica', 'contar', 'ajuda', 'duvida', 'duvidas',
+]);
 
-export function createSearch(records, today = () => new Date().toISOString().slice(0, 10)) {
+const hoje = () => new Date().toISOString().slice(0, 10);
+const designDe = record => (record.id.match(/^canva-([A-Za-z0-9]+)-p\d+$/) || [])[1] || record.id;
+
+export function createSearch(records, today = hoje, options = {}) {
   if (!Array.isArray(records)) throw new Error('Base inválida');
   const db = new DatabaseSync(':memory:');
   db.exec("CREATE VIRTUAL TABLE trechos USING fts5(id UNINDEXED, title, excerpt, keywords, tokenize='unicode61 remove_diacritics 2')");
@@ -20,29 +36,108 @@ export function createSearch(records, today = () => new Date().toISOString().sli
     byId.set(record.id, record);
     insert.run(record.id, record.title, record.excerpt, record.keywords);
   }
-  const query = db.prepare('SELECT id FROM trechos WHERE trechos MATCH ? ORDER BY bm25(trechos, 0, 3, 2, 1) LIMIT 12');
+
+  const vectors = options.vectors instanceof Map ? options.vectors : null;
+  const embedQuery = typeof options.embedQuery === 'function' ? options.embedQuery : null;
+  const hibrida = Boolean(vectors && embedQuery);
+  const query = db.prepare('SELECT id, bm25(trechos, 0, 4, 2, 1) AS score FROM trechos WHERE trechos MATCH ? ORDER BY score LIMIT 24');
+
+  function termos(text) {
+    const raw = text.match(/[\p{L}\p{N}]+/gu) || [];
+    return [...new Set(raw
+      .map(word => word.toLowerCase())
+      .filter(word => {
+        const plain = word.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        if (stopwords.has(plain)) return false;
+        // Siglas curtas (BC, TI, RA) valem; palavras comuns precisam de 3+ letras.
+        return plain.length >= 3 || /^[a-z]{2}$/.test(plain);
+      }))].slice(0, 12);
+  }
+
+  // Trechos válidos, na ordem do bm25 (melhor primeiro), já com os filtros de ano e revisão.
+  function ranquearFts(text) {
+    const words = termos(text);
+    if (!words.length) return [];
+    const expression = words.map(word => `"${word}"`).join(' OR ');
+    const years = words.filter(word => /^20\d{2}$/.test(word));
+    const rows = query.all(expression);
+    if (!rows.length) return [];
+    // bm25 é negativo: quanto menor, melhor. Descarta resultados muito piores que o primeiro.
+    const limite = rows[0].score * 0.35;
+    const resultado = [];
+    for (const row of rows) {
+      if (row.score > limite) continue;
+      const record = byId.get(row.id);
+      if (!record || record.review_after < today()) continue;
+      if (years.length && !years.some(year => `${record.title} ${record.excerpt} ${record.keywords}`.includes(year))) continue;
+      resultado.push(record);
+    }
+    return resultado;
+  }
+
+  // Limita a três trechos, no máximo dois por design, para não repetir páginas do mesmo material.
+  function escolher(ordenados) {
+    const selecionados = [];
+    const porDesign = new Map();
+    for (const record of ordenados) {
+      if (!record || selecionados.includes(record)) continue;
+      const design = designDe(record);
+      const usados = porDesign.get(design) || 0;
+      if (usados >= 2) continue;
+      porDesign.set(design, usados + 1);
+      selecionados.push(record);
+      if (selecionados.length === 3) break;
+    }
+    return selecionados;
+  }
+
+  function buscarPorPalavra(text) {
+    return escolher(ranquearFts(text));
+  }
+
+  async function buscarHibrida(text) {
+    const porPalavra = ranquearFts(text);
+    let vetor = null;
+    try { vetor = await embedQuery(text); } catch { /* Ollama fora: segue só com a busca por palavra */ }
+    if (!vetor) return escolher(porPalavra);
+
+    const porSignificado = [];
+    for (const record of records) {
+      const vetorDoTrecho = vectors.get(record.id);
+      if (!vetorDoTrecho || record.review_after < today()) continue;
+      porSignificado.push({ record, similaridade: cosine(vetor, vetorDoTrecho) });
+    }
+    porSignificado.sort((a, b) => b.similaridade - a.similaridade);
+
+    const pontuados = new Map();
+    porPalavra.forEach((record, index) => {
+      pontuados.set(record.id, { record, pontos: 0.45 * (1 - index / 24) });
+    });
+    for (const item of porSignificado.slice(0, 10)) {
+      if (item.similaridade < 0.32) continue;
+      const atual = pontuados.get(item.record.id);
+      const bonus = 0.55 * item.similaridade;
+      if (atual) atual.pontos += bonus;
+      else pontuados.set(item.record.id, { record: item.record, pontos: bonus });
+    }
+    const ordenados = [...pontuados.values()].sort((a, b) => b.pontos - a.pontos);
+    if (!ordenados.length) return [];
+    // Não devolve trechos muito distantes do melhor resultado.
+    const corte = ordenados[0].pontos * 0.5;
+    return escolher(ordenados.filter(item => item.pontos >= corte).map(item => item.record));
+  }
+
   return {
-    search(text) {
-      const raw = text.match(/[\p{L}\p{N}]+/gu) || [];
-      const words = [...new Set(raw
-        .map(word => word.toLowerCase())
-        .filter(word => {
-          const plain = word.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-          if (stopwords.has(plain)) return false;
-          // Siglas curtas (BC, TI, RA) valem; palavras comuns precisam de 3+ letras.
-          return plain.length >= 3 || /^[a-z]{2}$/.test(plain);
-        }))].slice(0, 12);
-      if (!words.length) return [];
-      const expression = words.map(word => `"${word}"`).join(' OR ');
-      const years = words.filter(word => /^20\d{2}$/.test(word));
-      return query.all(expression).map(row => byId.get(row.id))
-        .filter(record => record.review_after >= today() && (!years.length || years.some(year => `${record.title} ${record.excerpt} ${record.keywords}`.includes(year))))
-        .slice(0, 3);
-    },
+    mode: hibrida ? 'hibrida' : 'palavra-chave',
+    search: hibrida ? buscarHibrida : buscarPorPalavra,
     close() { db.close(); },
   };
 }
 
-export function loadSearch() {
-  return createSearch(JSON.parse(readFileSync(new URL('./base-oficial.json', import.meta.url), 'utf8')));
+export function loadRecords() {
+  return JSON.parse(readFileSync(new URL('./base-oficial.json', import.meta.url), 'utf8'));
+}
+
+export function loadSearch(options = {}) {
+  return createSearch(loadRecords(), hoje, options);
 }
