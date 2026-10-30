@@ -53,13 +53,19 @@
         <div class="nav-section-title">Acolhimento e fluxos</div>
         <ul class="nav-list">
           <li>
+            <button class="nav-item-btn active" aria-current="page" data-target="tabHome">
+              <svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5 9.5V21h14V9.5"></path></svg>
+              <span>Início</span>
+            </button>
+          </li>
+          <li>
             <button class="nav-item-btn" data-target="tabChat">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.5A8.5 8.5 0 1 1 21 11.5z"></path></svg>
               <span>Conversar sobre meus primeiros passos</span>
             </button>
           </li>
           <li>
-            <button class="nav-item-btn active" aria-current="page" data-target="tabChecklist">
+            <button class="nav-item-btn" data-target="tabChecklist">
               <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
               <span>Trilha do ingressante</span>
             </button>
@@ -114,29 +120,83 @@
     <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
       <main class="app-main" id="mainContent" tabindex="-1" role="main">
 
-      <!-- BANNER DE BOAS-VINDAS & STATUS DE PROGRESSO -->
-      <section class="hero-banner" aria-labelledby="heroTitle">
-        <div class="hero-text">
-          <h1 id="heroTitle">Boas-vindas à UFABC!</h1>
-          <p>Você não precisa entender tudo agora. Comece por uma dúvida ou pelo próximo passo da sua jornada.</p>
-        </div>
-        <div class="hero-progress-card" aria-live="polite">
-          <div class="progress-header">
-            <span>Sua trilha, no seu ritmo</span>
-            <span id="heroProgressText">0/8 Concluídos (0%)</span>
+      <!-- TELA INICIAL: POR ONDE COMEÇAR -->
+      <section class="content-section active" id="tabHome" aria-labelledby="homeHeading">
+
+        <!-- BANNER DE BOAS-VINDAS & STATUS DE PROGRESSO -->
+        <section class="hero-banner" aria-labelledby="heroTitle">
+          <div class="hero-text">
+            <h1 id="heroTitle">Boas-vindas à UFABC!</h1>
+            <p>Você não precisa entender tudo agora. Comece por uma dúvida ou pelo próximo passo da sua jornada.</p>
           </div>
-          <div class="progress-bar-track">
-            <div class="progress-bar-fill" id="heroProgressFill"></div>
+          <div class="hero-progress-card" aria-live="polite">
+            <div class="progress-header">
+              <span>Sua trilha, no seu ritmo</span>
+              <span id="heroProgressText">0/8 Concluídos (0%)</span>
+            </div>
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" id="heroProgressFill"></div>
+            </div>
+            <div class="progress-subtitle" id="heroProgressSub">Status: Primeiros passos em andamento</div>
           </div>
-          <div class="progress-subtitle" id="heroProgressSub">Status: Primeiros passos em andamento</div>
+        </section>
+
+        <div class="section-heading">
+          <h2 id="homeHeading">Por onde você quer começar?</h2>
+          <p>São três entradas possíveis. Escolha a que parece mais com a sua situação agora; você pode trocar depois.</p>
         </div>
+
+        <div class="home-choices" role="group" aria-label="Escolha por onde começar">
+          <button type="button" class="home-choice" data-home-choice="comecar">
+            <span class="home-choice-title">Vou começar agora</span>
+            <span class="home-choice-desc">Ir para o primeiro passo pendente da trilha.</span>
+          </button>
+          <button type="button" class="home-choice" data-home-choice="documentos">
+            <span class="home-choice-title">Já enviei os documentos</span>
+            <span class="home-choice-desc">Conferir a lista de documentos por modalidade de ingresso.</span>
+          </button>
+          <button type="button" class="home-choice" data-home-choice="duvida">
+            <span class="home-choice-title">Tenho uma dúvida</span>
+            <span class="home-choice-desc">Conversar sobre os primeiros passos ou procurar no FAQ.</span>
+          </button>
+        </div>
+
+        <div class="next-action-card" id="nextActionCard" aria-labelledby="nextActionTitle">
+          <p class="next-action-eyebrow">Sua próxima ação</p>
+          <h3 id="nextActionTitle">Diga como você ingressa na UFABC</h3>
+          <p id="nextActionDesc">Isso muda os documentos e os prazos que você precisa conferir. A escolha fica salva apenas neste navegador.</p>
+          <div class="via-selector" id="viaSelector" role="group" aria-label="Como você ingressa na UFABC">
+            <button type="button" data-via="sisu">SiSU (ENEM)</button>
+            <button type="button" data-via="transferencia">Transferência externa</button>
+            <button type="button" data-via="outro">Outro processo / não sei</button>
+          </div>
+          <div class="next-action-controls" id="nextActionControls" hidden>
+            <button type="button" class="next-action-primary" id="nextActionOpen">Abrir este passo</button>
+            <button type="button" id="nextActionDone">Já fiz este passo</button>
+          </div>
+          <p class="next-action-note" id="nextActionNote"></p>
+        </div>
+
+        <div class="home-trail-cta">
+          <button type="button" class="home-trail-btn" data-go-to="tabChecklist">Ver a trilha completa</button>
+          <p class="home-trail-note">8 passos do ingresso ao primeiro quadrimestre. A lista é pessoal e não confirma matrícula.</p>
+        </div>
+
+        <p class="prototype-notice"><strong>Protótipo:</strong> informações, documentos e prazos precisam ser confirmados nas fontes oficiais da UFABC e no edital do seu processo de ingresso.</p>
       </section>
 
       <!-- TAB 1: TRILHA DO INGRESSANTE -->
-      <section class="content-section active" id="tabChecklist" aria-labelledby="checklistHeading">
+      <section class="content-section" id="tabChecklist" aria-labelledby="checklistHeading">
         <div class="section-heading">
           <h2 id="checklistHeading">Trilha de acolhimento do ingressante</h2>
           <p>Comece pelos primeiros passos e consulte os demais quando precisar. Esta lista é pessoal e não confirma sua matrícula.</p>
+        </div>
+
+        <div class="trail-progress" aria-live="polite">
+          <span id="trailProgressText">0 de 8 passos concluídos</span>
+          <div class="trail-progress-track">
+            <div class="trail-progress-fill" id="trailProgressFill"></div>
+          </div>
         </div>
 
         <div class="start-actions" aria-label="Encontre orientação">
@@ -232,7 +292,9 @@
               <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
               Documentos exigidos e validação
             </h3>
-            <ul id="modDocsList" style="list-style:none; padding-left:0; line-height:1.6;">
+            <p class="docs-progress" id="modDocsProgress" aria-live="polite"></p>
+            <p class="docs-hint">Marque o que você já separou. A marcação fica só neste navegador e não confirma sua matrícula.</p>
+            <ul id="modDocsList" class="docs-checklist" style="list-style:none; padding-left:0; line-height:1.6;">
               <!-- Documentos injetados -->
             </ul>
           </div>
@@ -457,6 +519,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=20261029b"></script>
+  <script src="app.js?v=20261030a"></script>
 </body>
 </html>

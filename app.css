@@ -446,6 +446,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
   font-size: 0.85rem;
   font-weight: 600;
 }
@@ -1090,3 +1092,272 @@ body {
 .chat-source-item a { color: var(--text-main); text-decoration: underline; }
 .chat-source-meta { font-size: 0.75rem; margin-top: 0.15rem; }
 .chat-source-excerpt { margin-top: 0.3rem; border-top: 1px solid var(--border-subtle); padding-top: 0.3rem; font-style: italic; }
+
+/* ==========================================================================
+   PRÓXIMA AÇÃO (ORIENTAÇÃO POR TAREFA) E CHECKLIST DE DOCUMENTOS
+   ========================================================================== */
+.next-action-card {
+  margin-bottom: 1.25rem;
+  padding: 1rem 1.15rem;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-left: 4px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+
+.next-action-eyebrow {
+  margin: 0 0 0.2rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.next-action-card h3 {
+  margin: 0 0 0.3rem;
+  font-size: 1.08rem;
+  color: var(--text-main);
+}
+
+.next-action-card p {
+  margin: 0 0 0.65rem;
+  font-size: 0.88rem;
+  color: var(--text-muted);
+}
+
+.via-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.via-selector button {
+  font: inherit;
+  font-size: 0.84rem;
+  padding: 0.42rem 0.8rem;
+  border-radius: 999px;
+  border: 1px solid var(--border-strong);
+  background: var(--bg-surface);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all var(--transition-speed);
+}
+
+.via-selector button:hover {
+  background: var(--bg-surface-muted);
+  border-color: var(--color-primary);
+}
+
+.via-selector button.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.next-action-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+}
+
+.next-action-controls button {
+  font: inherit;
+  font-size: 0.88rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  background: var(--bg-surface);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all var(--transition-speed);
+}
+
+.next-action-controls button:hover {
+  border-color: var(--color-primary);
+  background: var(--bg-surface-muted);
+}
+
+.next-action-controls .next-action-primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.next-action-controls .next-action-primary:hover {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary-light);
+}
+
+.next-action-note {
+  margin: 0;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.checklist-item.is-next {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-accent-light);
+}
+
+.docs-progress {
+  margin: 0 0 0.2rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.docs-hint {
+  margin: 0 0 0.7rem;
+  font-size: 0.76rem;
+  color: var(--text-muted);
+}
+
+.docs-checklist .doc-item {
+  margin-bottom: 0.45rem;
+}
+
+.docs-checklist label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  font-size: 0.88rem;
+  color: var(--text-main);
+  cursor: pointer;
+}
+
+.docs-checklist input[type="checkbox"] {
+  margin-top: 0.2rem;
+  accent-color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.docs-checklist .doc-item.checked span {
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+/* ==========================================================================
+   TELA INICIAL: TRÊS ENTRADAS
+   ========================================================================== */
+.home-choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 1.4rem;
+}
+
+.home-choice {
+  font: inherit;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.1rem 1.15rem;
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  border-top: 3px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transition: all var(--transition-speed);
+}
+
+.home-choice:hover,
+.home-choice:focus-visible {
+  border-color: var(--color-primary);
+  border-top-color: var(--color-accent);
+  background: var(--bg-surface-muted);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.home-choice-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.home-choice-desc {
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+}
+
+.home-trail-cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  padding: 0.9rem 1.1rem;
+  background: var(--bg-surface-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.home-trail-btn {
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 700;
+  padding: 0.6rem 1.1rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-primary);
+  background: var(--color-primary);
+  color: #ffffff;
+  cursor: pointer;
+  transition: all var(--transition-speed);
+}
+
+.home-trail-btn:hover {
+  background: var(--color-primary-light);
+  border-color: var(--color-primary-light);
+}
+
+.home-trail-note {
+  flex: 1;
+  min-width: 220px;
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.trail-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.trail-progress-track {
+  flex: 1;
+  max-width: 220px;
+  height: 8px;
+  background: var(--bg-surface-muted);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.trail-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--color-primary);
+  border-radius: 999px;
+  transition: width 0.4s ease-in-out;
+}
+
+@media (max-width: 900px) {
+  .home-choices {
+    grid-template-columns: 1fr;
+  }
+}
+
