@@ -11,12 +11,56 @@
     "status": "experimental"
   },
   {
+    "id": "sisu-2026-edital-56",
+    "title": "Edital Nº 56/2025 - ingresso pelo SiSU 2026",
+    "organization": "Pró-Reitoria de Graduação da UFABC",
+    "url": "https://prograd.ufabc.edu.br/sisu",
+    "excerpt": "Edital Nº 56/2025 - ingresso nos Bacharelados e Licenciaturas Interdisciplinares pelo SISU em 2026",
+    "keywords": "edital 56 2025 sisu 2026 ingresso bacharelados licenciaturas",
+    "verified_at": "2026-10-29",
+    "review_after": "2026-11-12",
+    "status": "experimental"
+  },
+  {
+    "id": "sisu-2026-edital-06-complementar",
+    "title": "Edital Nº 06/2026 - complementar ao edital de ingresso 2026",
+    "organization": "Pró-Reitoria de Graduação da UFABC",
+    "url": "https://prograd.ufabc.edu.br/sisu",
+    "excerpt": "Edital Complementar ao Edital de Ingresso aos Bacharelados e Licenciaturas Interdisciplinares em 2026 – Chamada para Manifestação de Interesse e Envio de Documentos e Informações Pessoais",
+    "keywords": "edital 06 2026 complementar ingresso manifestação interesse documentos cadastro reserva",
+    "verified_at": "2026-10-29",
+    "review_after": "2026-11-12",
+    "status": "experimental"
+  },
+  {
     "id": "sisu-2026-turmas",
     "title": "Orientações para ingressantes 2026",
     "organization": "Pró-Reitoria de Graduação da UFABC",
     "url": "https://prograd.ufabc.edu.br/sisu",
     "excerpt": "Confira turmas, horários e orientações gerais para ingressantes em:",
     "keywords": "sisu 2026 aulas turmas horários início ingressantes orientações",
+    "verified_at": "2026-10-29",
+    "review_after": "2026-11-12",
+    "status": "experimental"
+  },
+  {
+    "id": "sisu-2026-documentos-matricula",
+    "title": "Documentos para as matrículas",
+    "organization": "Pró-Reitoria de Graduação da UFABC",
+    "url": "https://prograd.ufabc.edu.br/sisu/documentos",
+    "excerpt": "Documentos para as matrículas",
+    "keywords": "documentos matrícula sisu 2026 comprovantes anexos cotas renda",
+    "verified_at": "2026-10-29",
+    "review_after": "2026-11-12",
+    "status": "experimental"
+  },
+  {
+    "id": "sisu-2026-chamada-regular",
+    "title": "Chamada Regular - SiSU 2026",
+    "organization": "Pró-Reitoria de Graduação da UFABC",
+    "url": "https://prograd.ufabc.edu.br/sisu",
+    "excerpt": "Convocação para matrícula",
+    "keywords": "chamada regular sisu 2026 convocação matrícula lista espera",
     "verified_at": "2026-10-29",
     "review_after": "2026-11-12",
     "status": "experimental"
@@ -39,6 +83,39 @@
     "url": "https://prograd.ufabc.edu.br/calendarios",
     "excerpt": "Calendário acadêmico 2027",
     "keywords": "calendário acadêmico 2027 datas aulas quadrimestre",
+    "verified_at": "2026-10-29",
+    "review_after": "2026-11-12",
+    "status": "experimental"
+  },
+  {
+    "id": "calendario-procedimentos-2026",
+    "title": "Calendário de procedimentos administrativo-acadêmicos 2026",
+    "organization": "Pró-Reitoria de Graduação da UFABC",
+    "url": "https://prograd.ufabc.edu.br/calendarios",
+    "excerpt": "Calendário de procedimentos administrativo-acadêmicos 2026",
+    "keywords": "calendário procedimentos 2026 administrativo acadêmico matrícula prazos",
+    "verified_at": "2026-10-29",
+    "review_after": "2026-11-12",
+    "status": "experimental"
+  },
+  {
+    "id": "calendario-administrativo-2026",
+    "title": "Calendário administrativo da UFABC 2026",
+    "organization": "UFABC",
+    "url": "https://prograd.ufabc.edu.br/calendarios",
+    "excerpt": "Calendário administrativo da UFABC 2026",
+    "keywords": "calendário administrativo UFABC 2026 datas",
+    "verified_at": "2026-10-29",
+    "review_after": "2026-11-12",
+    "status": "experimental"
+  },
+  {
+    "id": "contato-prograd",
+    "title": "Contatos oficiais da ProGrad",
+    "organization": "Pró-Reitoria de Graduação da UFABC",
+    "url": "https://prograd.ufabc.edu.br/contatos",
+    "excerpt": "Fale Conosco - contatos oficiais da Pró-Reitoria de Graduação para atendimento humano",
+    "keywords": "contato prograd atendimento humano fale conosco canais",
     "verified_at": "2026-10-29",
     "review_after": "2026-11-12",
     "status": "experimental"
