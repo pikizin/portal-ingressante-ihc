@@ -7,7 +7,7 @@ import { loadSearch } from './busca-oficial.mjs';
 
 const root = dirname(fileURLToPath(import.meta.url));
 const port = 4173;
-const model = 'qwen2.5:7b'; // Modelo instalado localmente, não variante cloud.
+const model = process.env.OLLAMA_MODEL || 'granite4.2:8b'; // Modelo instalado localmente, não variante cloud.
 const files = new Map([
   ['/', ['index.html', 'text/html; charset=utf-8']],
   ['/index.html', ['index.html', 'text/html; charset=utf-8']],
