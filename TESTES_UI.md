@@ -38,6 +38,8 @@ node testes-ui-cdp.mjs
 
 O teste limpa o `localStorage` no início, então pode ser repetido sem interferência da execução anterior. Ele cobre:
 
+- home como tela inicial, com as três entradas e o botão da trilha;
+- cada entrada abrindo a seção correspondente ("Vou começar" já destaca o passo pendente);
 - cartão de próxima ação pedindo a via de ingresso;
 - controles escondidos antes da escolha;
 - avanço para o próximo passo ao marcar "Já fiz este passo";

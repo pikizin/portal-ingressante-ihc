@@ -70,6 +70,52 @@ checar('card inicial pede a via de ingresso',
   await evaluate("document.getElementById('nextActionTitle').textContent"),
   'Diga como você ingressa');
 
+checar('home é a tela inicial',
+  await evaluate(`
+    document.querySelector('.nav-item-btn[data-target="tabHome"]').classList.contains('active') &&
+    document.getElementById('tabHome').classList.contains('active') &&
+    !document.getElementById('tabChecklist').classList.contains('active')
+  `),
+  'true');
+
+checar('home oferece as três entradas',
+  await evaluate("document.querySelectorAll('[data-home-choice]').length"),
+  '3');
+
+const aposComecar = await evaluate(`
+  document.querySelector('[data-home-choice="comecar"]').click();
+  JSON.stringify({
+    trilha: document.getElementById('tabChecklist').classList.contains('active'),
+    destacado: document.querySelector('#checklistItemsList .is-next')?.id || ''
+  });
+`);
+checar('"Vou começar" abre a trilha', aposComecar, '"trilha":true');
+checar('"Vou começar" destaca o passo pendente', aposComecar, 'item_step_doc');
+
+checar('"Já enviei os documentos" abre a página de modalidades',
+  await evaluate(`
+    document.querySelector('.nav-item-btn[data-target="tabHome"]').click();
+    document.querySelector('[data-home-choice="documentos"]').click();
+    document.getElementById('tabModalidades').classList.contains('active');
+  `),
+  'true');
+
+checar('"Tenho uma dúvida" abre o chat',
+  await evaluate(`
+    document.querySelector('.nav-item-btn[data-target="tabHome"]').click();
+    document.querySelector('[data-home-choice="duvida"]').click();
+    document.getElementById('tabChat').classList.contains('active');
+  `),
+  'true');
+
+checar('botão "Ver a trilha completa" leva à trilha',
+  await evaluate(`
+    document.querySelector('.nav-item-btn[data-target="tabHome"]').click();
+    document.querySelector('.home-trail-btn').click();
+    document.getElementById('tabChecklist').classList.contains('active');
+  `),
+  'true');
+
 checar('controles escondidos sem via escolhida',
   await evaluate("document.getElementById('nextActionControls').hidden"),
   'true');

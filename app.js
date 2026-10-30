@@ -6,6 +6,7 @@
 
 document.addEventListener("DOMContentLoaded", () => {
   initNavigation();
+  initHome();
   initChecklist();
   initNextAction();
   initMindmaps();
@@ -57,6 +58,56 @@ function initNavigation() {
           heading.focus();
         }
       }
+    });
+  });
+}
+
+/* ==========================================================================
+   1b. TELA INICIAL (HOME): TRÊS ENTRADAS
+   ========================================================================== */
+function irParaSecao(targetId) {
+  const destino = document.querySelector(`.nav-item-btn[data-target="${targetId}"]`);
+  if (!destino) return;
+  destino.click();
+  const heading = document.querySelector(`#${targetId} h2`);
+  if (heading) {
+    heading.tabIndex = -1;
+    heading.focus();
+  }
+}
+
+function irParaPasso(id) {
+  const itemEl = document.getElementById(`item_${id}`);
+  if (!itemEl) return;
+  const navTrilha = document.querySelector('.nav-item-btn[data-target="tabChecklist"]');
+  if (navTrilha) navTrilha.click();
+  itemEl.hidden = false;
+  itemEl.classList.add("is-next");
+  const checkbox = itemEl.querySelector("input");
+  if (checkbox) checkbox.focus({ preventScroll: true });
+  window.requestAnimationFrame(() => {
+    itemEl.scrollIntoView({ block: "center", behavior: "smooth" });
+  });
+}
+
+function initHome() {
+  const escolhas = document.querySelectorAll("[data-home-choice]");
+  if (!escolhas.length) return;
+
+  escolhas.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const escolha = btn.dataset.homeChoice;
+      if (escolha === "comecar") {
+        const pendente = proximoPassoPendente();
+        if (pendente) irParaPasso(pendente.id);
+        else irParaSecao("tabChecklist");
+        return;
+      }
+      if (escolha === "documentos") {
+        irParaSecao("tabModalidades");
+        return;
+      }
+      irParaSecao("tabChat");
     });
   });
 }
@@ -135,6 +186,11 @@ function updateProgressDisplay() {
 
   if (fillEl) fillEl.style.width = `${percentage}%`;
   if (textEl) textEl.textContent = `${completed}/${total} Concluídos (${percentage}%)`;
+
+  const trailText = document.getElementById("trailProgressText");
+  const trailFill = document.getElementById("trailProgressFill");
+  if (trailText) trailText.textContent = `${completed} de ${total} passos concluídos`;
+  if (trailFill) trailFill.style.width = `${percentage}%`;
   if (subEl) {
     if (percentage === 100) {
       subEl.textContent = "Você marcou todos os passos desta lista";
@@ -249,11 +305,7 @@ function initNextAction() {
     }
     const itemEl = document.getElementById(`item_${pendente.id}`);
     if (!itemEl) return;
-    itemEl.hidden = false;
-    itemEl.classList.add("is-next");
-    itemEl.scrollIntoView({ block: "center", behavior: "smooth" });
-    const checkbox = itemEl.querySelector("input");
-    if (checkbox) checkbox.focus({ preventScroll: true });
+    irParaPasso(pendente.id);
   });
 
   doneBtn.addEventListener("click", () => {
