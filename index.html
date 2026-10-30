@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Protótipo do Portal do ingressante UFABC - Projeto da disciplina Interação Humano-Computador (IHC)">
+  <title>UFABC Ingressante // Hub Interativo de Acolhimento</title>
+  <link rel="stylesheet" href="app.css">
+  <!-- Mermaid local offline -->
+  <script src="mermaid.min.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#mainContent">Ir para o conteúdo principal</a>
+
+  <!-- CABEÇALHO DA APLICAÇÃO -->
+  <header class="app-header" role="banner">
+    <div class="brand-section">
+      <span class="brand-logo-badge">UFABC</span>
+      <div class="brand-title">
+        Portal do ingressante
+        <span class="brand-subtitle">Hub de acolhimento e vida acadêmica</span>
+      </div>
+    </div>
+
+    <div class="header-controls">
+      <!-- Gatilho de Busca Global (Ctrl+K) -->
+      <button class="search-trigger-btn" id="searchTriggerBtn" type="button" aria-label="Abrir busca global">
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <span>Buscar guias, siglas, dúvidas...</span>
+        <span class="kbd-shortcut">Ctrl K</span>
+      </button>
+
+      <!-- Barra de Acessibilidade (WCAG 2.1) -->
+      <div class="a11y-group" role="group" aria-label="Controles de acessibilidade">
+        <button class="icon-btn" id="btnFontDecrease" type="button" title="Diminuir tamanho da fonte" aria-label="Diminuir fonte">A-</button>
+        <button class="icon-btn" id="btnFontIncrease" type="button" title="Aumentar tamanho da fonte" aria-label="Aumentar fonte">A+</button>
+        <button class="icon-btn" id="btnToggleContrast" type="button" title="Alternar alto contraste" aria-label="Alto contraste">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor"></path></svg>
+        </button>
+        <button class="icon-btn" id="btnToggleTheme" type="button" title="Alternar tema claro/escuro" aria-label="Alternar tema">
+          <svg viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- CONTAINER PRINCIPAL -->
+  <div class="app-container">
+
+    <!-- NAVEGAÇÃO LATERAL -->
+    <aside class="app-sidebar" role="navigation" aria-label="Menu principal de navegação">
+      <div>
+        <div class="nav-section-title">Acolhimento e fluxos</div>
+        <ul class="nav-list">
+          <li>
+            <button class="nav-item-btn" data-target="tabChat">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.5A8.5 8.5 0 1 1 21 11.5z"></path></svg>
+              <span>Conversar sobre meus primeiros passos</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item-btn active" aria-current="page" data-target="tabChecklist">
+              <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
+              <span>Trilha do ingressante</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item-btn" data-target="tabMapas">
+              <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+              <span>Mapas mentais e fluxos</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item-btn" data-target="tabModalidades">
+              <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              <span>Por modalidade</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item-btn" data-target="tabFaq">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              <span>Dúvidas frequentes (FAQ)</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <div class="nav-section-title">Orientações e teoria</div>
+        <ul class="nav-list">
+          <li>
+            <button class="nav-item-btn" data-target="tabSiglas">
+              <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              <span>Siglas essenciais</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item-btn" data-target="tabCampus">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              <span>Guia dos campi</span>
+            </button>
+          </li>
+          <li>
+            <button class="nav-item-btn" data-target="tabIhc">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              <span>Painel IHC (showcase)</span>
+              <span class="ihc-pill-badge">IHC</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
+      <main class="app-main" id="mainContent" tabindex="-1" role="main">
+
+      <!-- BANNER DE BOAS-VINDAS & STATUS DE PROGRESSO -->
+      <section class="hero-banner" aria-labelledby="heroTitle">
+        <div class="hero-text">
+          <h1 id="heroTitle">Boas-vindas à UFABC!</h1>
+          <p>Você não precisa entender tudo agora. Comece por uma dúvida ou pelo próximo passo da sua jornada.</p>
+        </div>
+        <div class="hero-progress-card" aria-live="polite">
+          <div class="progress-header">
+            <span>Sua trilha, no seu ritmo</span>
+            <span id="heroProgressText">0/8 Concluídos (0%)</span>
+          </div>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" id="heroProgressFill"></div>
+          </div>
+          <div class="progress-subtitle" id="heroProgressSub">Status: Primeiros passos em andamento</div>
+        </div>
+      </section>
+
+      <!-- TAB 1: TRILHA DO INGRESSANTE -->
+      <section class="content-section active" id="tabChecklist" aria-labelledby="checklistHeading">
+        <div class="section-heading">
+          <h2 id="checklistHeading">Trilha de acolhimento do ingressante</h2>
+          <p>Comece pelos primeiros passos e consulte os demais quando precisar. Esta lista é pessoal e não confirma sua matrícula.</p>
+        </div>
+
+        <div class="start-actions" aria-label="Encontre orientação">
+          <button type="button" data-go-to="tabModalidades">Preciso conferir documentos</button>
+          <button type="button" data-go-to="tabFaq">Tenho uma dúvida</button>
+          <button type="button" data-go-to="tabCampus">Vou conhecer o campus</button>
+          <button type="button" data-go-to="tabChat">Quero conversar sobre meus primeiros passos</button>
+        </div>
+        <p class="prototype-notice"><strong>Protótipo:</strong> informações, documentos e prazos precisam ser confirmados nas fontes oficiais da UFABC e no edital do seu processo de ingresso.</p>
+
+        <div class="checklist-container" id="checklistItemsList">
+          <!-- Injetado via app.js -->
+        </div>
+        <button class="show-more-btn" id="showMoreChecklist" type="button" aria-expanded="false" aria-controls="checklistItemsList">Mostrar todos os passos</button>
+      </section>
+
+      <section class="content-section" id="tabChat" aria-labelledby="chatHeading">
+        <div class="section-heading">
+          <h2 id="chatHeading">Vamos começar juntos</h2>
+          <p>Escolha um assunto ou escreva uma dúvida curta. Você não precisa saber tudo agora.</p>
+        </div>
+        <div class="prototype-notice">
+          <strong>Protótipo:</strong> não é atendimento oficial. Confira editais, prazos e documentos nas fontes oficiais. Não escreva dados pessoais, senhas ou informações médicas.
+        </div>
+        <div class="chat-panel">
+          <p>No modo padrão, as respostas são prontas e não são enviadas a servidor. Com a IA local ativada, cada pergunta é enviada ao serviço local e ao Ollama neste computador; não envie dados sensíveis. As mensagens visíveis desaparecem ao recarregar a página.</p>
+          <label class="chat-mode"><input id="chatUseAI" type="checkbox"> Usar IA local experimental (requer servidor local)</label>
+          <div class="chat-suggestions" role="group" aria-label="Assuntos sugeridos">
+            <button type="button" data-chat-topic="inicio">Não sei por onde começar</button>
+            <button type="button" data-chat-topic="matricula">Matrícula e documentos</button>
+            <button type="button" data-chat-topic="aulas">Início das aulas</button>
+            <button type="button" data-chat-topic="apoio">Preciso de ajuda</button>
+          </div>
+          <div id="chatMessages" class="chat-messages" role="log" aria-label="Conversa" aria-live="polite" aria-relevant="additions">
+            <div class="chat-message chat-assistant"><strong>Orientação:</strong> Estou aqui para ajudar você a encontrar um primeiro passo. Escolha um assunto ou escreva sua dúvida.</div>
+          </div>
+          <p id="chatStatus" role="status" aria-live="polite"></p>
+          <form id="chatForm" class="chat-form">
+            <label for="chatInput">Sua dúvida, sem dados pessoais</label>
+            <div class="chat-form-row">
+              <input id="chatInput" type="text" maxlength="300" autocomplete="off" placeholder="Ex.: como encontro o edital?">
+              <button type="submit">Enviar</button>
+            </div>
+          </form>
+          <p class="chat-support">Para atendimento humano, consulte os <a href="https://prograd.ufabc.edu.br/contatos">contatos oficiais da Pró-Reitoria de Graduação</a>.</p>
+        </div>
+      </section>
+
+      <!-- TAB 2: MAPAS MENTAIS & FLUXOS ESTILO MERMAID -->
+      <section class="content-section" id="tabMapas" aria-labelledby="mapasHeading">
+        <div class="section-heading">
+          <h2 id="mapasHeading">Mapas mentais e fluxogramas interativos</h2>
+          <p>Visualizações esquemáticas dos processos mais complexos da UFABC, organizadas para facilitar a retenção visual e tomada de decisão.</p>
+        </div>
+
+        <div class="mindmap-selector-bar" role="group" aria-label="Seleção de mapas mentais">
+          <button class="mindmap-tab-btn active" data-map="matricula" type="button">1ª vs 2ª matrícula</button>
+          <button class="mindmap-tab-btn" data-map="interdisciplinar" type="button">Arquitetura interdisciplinar (pós-BI)</button>
+          <button class="mindmap-tab-btn" data-map="transferencia" type="button">Troca de curso (Res. 250)</button>
+          <button class="mindmap-tab-btn" data-map="trancamento" type="button">Trancamento total (Res. 243)</button>
+        </div>
+
+        <div class="mindmap-canvas-card">
+          <div>
+            <h3 id="mindmapActiveTitle" style="font-size:1.15rem; font-weight:700; margin-bottom:0.35rem;">1ª matrícula (automática) vs 2ª matrícula (ajuste e prioridades)</h3>
+            <div class="mindmap-caption" id="mindmapActiveCaption">
+              No 1º quadrimestre, o ingressante não escolhe disciplinas; a ProGrad realiza a matrícula automática em turmas introdutórias. A partir do 2º quadrimestre, o estudante escolhe suas turmas e concorre por prioridade regulamentar.
+            </div>
+          </div>
+
+          <div class="mermaid-wrapper">
+            <div class="mermaid" id="mermaidContainer">
+              <!-- Mermaid diagram code rendered via app.js -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 3: ACESSO POR MODALIDADE (LUGARES & DOCUMENTOS) -->
+      <section class="content-section" id="tabModalidades" aria-labelledby="modHeading">
+        <div class="section-heading">
+          <h2 id="modHeading">Lugares e documentos por modalidade de ingresso</h2>
+          <p>Selecione seu perfil de entrada para descobrir exatamente quais documentos você deve comprovar e onde você deve se dirigir dentro do campus.</p>
+        </div>
+
+        <div class="modalidade-selector-grid" id="modalidadeSelectorGrid">
+          <!-- Botoes de modalidades injetados via app.js -->
+        </div>
+
+        <div class="modalidade-details-container">
+          <div class="mod-detail-box">
+            <h3>
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+              Documentos exigidos e validação
+            </h3>
+            <ul id="modDocsList" style="list-style:none; padding-left:0; line-height:1.6;">
+              <!-- Documentos injetados -->
+            </ul>
+          </div>
+
+          <div class="mod-detail-box">
+            <h3>
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              Locais físicos de referência no campus
+            </h3>
+            <div id="modLocaisList">
+              <!-- Locais injetados -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 4: PERGUNTAS E RESPOSTAS (FAQ) -->
+      <section class="content-section" id="tabFaq" aria-labelledby="faqHeading">
+        <div class="section-heading">
+          <h2 id="faqHeading">Perguntas e respostas de dúvidas comuns</h2>
+          <p>Tire suas dúvidas rápidas sobre início das aulas, sistema de matrículas, transporte e alimentação.</p>
+        </div>
+
+        <div class="faq-search-box">
+          <input type="text" class="filter-input" id="faqSearchInput" placeholder="Buscar por palavra-chave nas dúvidas (ex: matrícula, RU, fretado, reprovação)..." aria-label="Buscar nas perguntas frequentes">
+        </div>
+
+        <div class="filter-pills" style="margin-bottom:1.5rem;" role="group" aria-label="Categorias de dúvidas">
+          <button class="filter-pill-btn active faq-pill-btn" data-cat="Todas" type="button">Todas</button>
+          <button class="filter-pill-btn faq-pill-btn" data-cat="Matrícula" type="button">Matrícula</button>
+          <button class="filter-pill-btn faq-pill-btn" data-cat="Aulas" type="button">Aulas</button>
+          <button class="filter-pill-btn faq-pill-btn" data-cat="Transporte" type="button">Fretado</button>
+          <button class="filter-pill-btn faq-pill-btn" data-cat="Alimentação" type="button">RU</button>
+          <button class="filter-pill-btn faq-pill-btn" data-cat="Trocas" type="button">Trocas</button>
+        </div>
+
+        <div class="faq-list-container" id="faqAccordionContainer">
+          <!-- Accordion renderizado via app.js -->
+        </div>
+      </section>
+
+      <!-- TAB 5: SIGLAS ESSENCIAIS -->
+      <section class="content-section" id="tabSiglas" aria-labelledby="siglasHeading">
+        <div class="section-heading">
+          <h2 id="siglasHeading">Siglas essenciais do ingressante</h2>
+          <p>Apenas as siglas e termos de alto impacto que você realmente precisa dominar desde a primeira semana.</p>
+        </div>
+
+        <div class="filter-bar">
+          <input type="text" class="filter-input" id="glossarySearchInput" placeholder="Filtrar sigla ou nome (ex: CR, BC&amp;T, Fretado)..." aria-label="Filtrar siglas">
+          <div class="filter-pills" role="group" aria-label="Categorias de siglas">
+            <button class="filter-pill-btn active glossary-pill-btn" data-category="Todos" type="button">Todos</button>
+            <button class="filter-pill-btn glossary-pill-btn" data-category="Acadêmico" type="button">Acadêmico</button>
+            <button class="filter-pill-btn glossary-pill-btn" data-category="Cursos" type="button">Cursos</button>
+            <button class="filter-pill-btn glossary-pill-btn" data-category="Campus" type="button">Campus</button>
+          </div>
+        </div>
+
+        <div class="cards-grid" id="glossaryCardsContainer">
+          <!-- Cards injetados via app.js -->
+        </div>
+      </section>
+
+      <!-- TAB 6: GUIA DOS CAMPI -->
+      <section class="content-section" id="tabCampus" aria-labelledby="campusHeading">
+        <div class="section-heading">
+          <h2 id="campusHeading">Guia dos campi e pontos críticos</h2>
+          <p>Informações de sobrevivência espacial nos campi Santo André e São Bernardo do Campo.</p>
+        </div>
+
+        <div class="cards-grid">
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Campus Santo André</span>
+                <h3>Estrutura do Bloco A</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              O Bloco A possui 3 torres interconectadas exclusivamente pelos andares <strong>0 (térreo), 1 e 2</strong>. Para transitar entre a Torre 3 e a Torre 1, você deve descer para um desses três andares. O <strong>Bloco B</strong> não tem ligação direta com o Bloco A e possui acesso próprio em frente ao Carrefour.
+            </div>
+            <div class="card-footer">
+              <span class="checklist-badge">Salas de aula e laboratórios</span>
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Transporte gratuito</span>
+                <h3>Fretado intercampi</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              A UFABC oferece serviço gratuito de ônibus fretado interligando os campi Santo André e São Bernardo do Campo durante todos os dias letivos. O embarque requer apresentação da carteirinha estudantil oficial ou atestado de matrícula com documento de identidade.
+            </div>
+            <div class="card-footer">
+              <span class="checklist-badge">Santo André &lt;&gt; SBC</span>
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Alimentação subsidiada</span>
+                <h3>Restaurante Universitário (RU)</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Refeições completas balanceadas por nutricionistas, com opção vegana e vegetariana diária. O acesso é feito com cartão institucional e compra prévia de créditos no sistema ou guichê local.
+            </div>
+            <div class="card-footer">
+              <span class="checklist-badge">Almoço e jantar</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TAB 7: PAINEL IHC SHOWCASE -->
+      <section class="content-section" id="tabIhc" aria-labelledby="ihcHeading">
+        <div class="section-heading">
+          <h2 id="ihcHeading">Painel teórico: decisões de design e IHC</h2>
+          <p>Mapeamento das 10 Heurísticas de Jakob Nielsen, Princípios de Donald Norman e Diretrizes WCAG implementadas no protótipo.</p>
+        </div>
+
+        <div class="cards-grid">
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Heurística 1</span>
+                <h3>Visibilidade do status do sistema</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              A barra de progresso do checklist no topo do portal atualiza visualmente e em tempo real a conclusão das etapas de acolhimento do calouro com persistência no navegador.
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Heurística 2 &amp; 6</span>
+                <h3>Mundo real e reconhecimento</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Mapas mentais no padrão Mermaid transformam regras textuais burocráticas em diagramas de decisão limpos, e o FAQ responde em linguagem humana às dores reais dos alunos.
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Heurística 7</span>
+                <h3>Flexibilidade e eficiência de uso</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Busca global imediata através do atalho <code>Ctrl + K</code>, filtros instantâneos por modalidade de cota e por categorias de dúvidas frequentes.
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor"></path></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Acessibilidade universal</span>
+              <h3>Recursos de acessibilidade</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Ajuste de fonte, alto contraste e modo escuro. A acessibilidade precisa ser verificada com testes automatizados e manuais.
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- MODAL DE BUSCA GLOBAL (CTRL + K) -->
+  <div class="modal-backdrop" id="searchModalBackdrop" role="dialog" aria-modal="true" aria-hidden="true" aria-label="Busca global do portal">
+    <div class="search-modal">
+      <div class="search-modal-header">
+        <svg viewBox="0 0 24 24" style="width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+        <input type="text" class="search-modal-input" id="searchModalInput" placeholder="Digite para buscar termos, guias ou matérias..." aria-label="Campo de busca">
+        <button type="button" class="search-close-btn" id="searchCloseBtn">Fechar</button>
+      </div>
+      <ul class="search-results-list" id="searchResultsList">
+        <!-- Injetado dinamicamente via app.js -->
+      </ul>
+    </div>
+  </div>
+
+  <!-- RODAPÉ DA PÁGINA -->
+  <footer class="app-footer" role="contentinfo">
+    <div>
+      <strong>Universidade Federal do ABC</strong> // Portal do ingressante (Protótipo IHC)
+    </div>
+    <div class="footer-ihc-tag">
+      Protótipo // Acessibilidade em avaliação
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

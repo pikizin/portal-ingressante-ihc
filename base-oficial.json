@@ -1,0 +1,46 @@
+[
+  {
+    "id": "sisu-2026-edital",
+    "title": "Edital de ingresso via SiSU 2026",
+    "organization": "Pró-Reitoria de Graduação da UFABC",
+    "url": "https://prograd.ufabc.edu.br/sisu",
+    "excerpt": "Este Edital normatiza o ingresso em 2026 por meio do Sistema de Seleção Unificada - SiSU. A leitura deste Edital e de seus anexos é fundamental para as pessoas que pretendem participar deste processo seletivo",
+    "keywords": "sisu 2026 edital ingresso documentos matrícula processo vagas cotas",
+    "verified_at": "2026-10-29",
+    "review_after": "2026-11-12",
+    "status": "experimental"
+  },
+  {
+    "id": "sisu-2026-turmas",
+    "title": "Orientações para ingressantes 2026",
+    "organization": "Pró-Reitoria de Graduação da UFABC",
+    "url": "https://prograd.ufabc.edu.br/sisu",
+    "excerpt": "Confira turmas, horários e orientações gerais para ingressantes em:",
+    "keywords": "sisu 2026 aulas turmas horários início ingressantes orientações",
+    "verified_at": "2026-10-29",
+    "review_after": "2026-11-12",
+    "status": "experimental"
+  },
+  {
+    "id": "calendario-2026",
+    "title": "Calendário acadêmico 2026",
+    "organization": "Pró-Reitoria de Graduação da UFABC",
+    "url": "https://prograd.ufabc.edu.br/calendarios",
+    "excerpt": "Calendário acadêmico 2026",
+    "keywords": "calendário acadêmico 2026 datas aulas quadrimestre",
+    "verified_at": "2026-10-29",
+    "review_after": "2026-11-12",
+    "status": "experimental"
+  },
+  {
+    "id": "calendario-2027",
+    "title": "Calendário acadêmico 2027",
+    "organization": "Pró-Reitoria de Graduação da UFABC",
+    "url": "https://prograd.ufabc.edu.br/calendarios",
+    "excerpt": "Calendário acadêmico 2027",
+    "keywords": "calendário acadêmico 2027 datas aulas quadrimestre",
+    "verified_at": "2026-10-29",
+    "review_after": "2026-11-12",
+    "status": "experimental"
+  }
+]
