@@ -6,7 +6,9 @@ Execute `node servidor-local.mjs` nesta pasta e abra <http://127.0.0.1:4173>. No
 $env:OLLAMA_MODEL='qwen2.5:7b'; node servidor-local.mjs
 ```
 
-O carregamento pode demorar. Não é necessário baixar modelos nem instalar dependências Node para o servidor.
+O carregamento pode demorar. Não é necessário baixar modelos nem instalar dependências Node para o servidor. As chamadas usam `think: false` porque modelos com raciocínio (como o `granite4.2:8b`) gastavam os tokens no bloco de raciocínio e devolviam resposta vazia; para modelos sem raciocínio a opção é ignorada.
+
+Assuntos sem cobertura na base (hoje, **estágio**) não consultam a IA: o chat mostra a resposta pronta e encaminha ao atendimento humano, em vez de responder com trechos de outro assunto.
 
 Sem o servidor ou com a opção desmarcada, o chat usa respostas prontas. Com a IA ativa, cada pergunta é enviada ao servidor e ao Ollama locais, sem histórico de turnos; não envie dados pessoais, senhas ou informações médicas. O código do portal não armazena conversas; isso não garante a política de logs de outros componentes instalados.
 

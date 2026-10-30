@@ -941,17 +941,21 @@ function initChat() {
       if (!response.ok || typeof result.reply !== "string") throw new Error("IA local indisponível.");
       appendMessage("IA local (experimental)", result.reply);
       appendSources(result.sources || [], result.mode || "ia-experimental");
-    } catch {
+    } catch (error) {
       const fallback = answers[fallbackTopic] || answers.desconhecido;
-      appendMessage("Orientação", `Não foi possível consultar a IA local. Resposta pronta: ${fallback.text}`);
+      console.warn("[chat] IA local indisponível:", error && error.message ? error.message : error);
+      appendMessage("Orientação", `A IA local não respondeu agora. Resposta pronta: ${fallback.text}`);
       appendSources([], "sem-evidencia");
     } finally {
       if (status) status.textContent = "";
     }
   }
 
+  // Assuntos sem cobertura na base: o chat responde com o texto pronto, sem consultar a IA.
+  const semCobertura = new Set(["estagio"]);
+
   function respond(text, topic) {
-    if (useAI && useAI.checked) {
+    if (useAI && useAI.checked && !semCobertura.has(topic)) {
       void respondWithAI(text, topic);
       return;
     }

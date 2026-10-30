@@ -23,8 +23,15 @@ export function createSearch(records, today = () => new Date().toISOString().sli
   const query = db.prepare('SELECT id FROM trechos WHERE trechos MATCH ? ORDER BY bm25(trechos, 0, 3, 2, 1) LIMIT 12');
   return {
     search(text) {
-      const words = [...new Set((text.toLowerCase().match(/[\p{L}\p{N}]+/gu) || [])
-        .filter(word => word.length >= 3 && !stopwords.has(word.normalize('NFD').replace(/[\u0300-\u036f]/g, ''))))].slice(0, 12);
+      const raw = text.match(/[\p{L}\p{N}]+/gu) || [];
+      const words = [...new Set(raw
+        .map(word => word.toLowerCase())
+        .filter(word => {
+          const plain = word.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+          if (stopwords.has(plain)) return false;
+          // Siglas curtas (BC, TI, RA) valem; palavras comuns precisam de 3+ letras.
+          return plain.length >= 3 || /^[a-z]{2}$/.test(plain);
+        }))].slice(0, 12);
       if (!words.length) return [];
       const expression = words.map(word => `"${word}"`).join(' OR ');
       const years = words.filter(word => /^20\d{2}$/.test(word));
