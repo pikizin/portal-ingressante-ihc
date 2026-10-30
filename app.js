@@ -857,6 +857,11 @@ function initChat() {
       label: "Consultar contatos oficiais da ProGrad",
       url: "https://prograd.ufabc.edu.br/contatos"
     },
+    estagio: {
+      text: "Ainda não temos informações oficiais sobre estágio nesta base experimental. Consulte a Pró-Reitoria de Graduação ou a coordenação do seu curso para orientações sobre estágio obrigatório e não obrigatório.",
+      label: "Consultar contatos oficiais da ProGrad",
+      url: "https://prograd.ufabc.edu.br/contatos"
+    },
     desconhecido: {
       text: "Ainda não sei orientar essa dúvida. Este protótipo reconhece apenas alguns assuntos e não substitui atendimento humano. Tente uma das sugestões ou consulte a ProGrad.",
       label: "Consultar contatos oficiais da ProGrad",
@@ -966,6 +971,7 @@ function initChat() {
     const query = text.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
     let topic = "desconhecido";
     if (/ajuda|contato|apoio|atendimento/.test(query)) topic = "apoio";
+    else if (/estagio|estagios|emprego|trabalho/.test(query)) topic = "estagio";
     else if (/matricula|documento|edital|sisu|cota/.test(query)) topic = "matricula";
     else if (/aula|calendario|data|quadrimestre/.test(query)) topic = "aulas";
     else if (/comec|primeiro|inicio|perdid|orienta/.test(query)) topic = "inicio";
