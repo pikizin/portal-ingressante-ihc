@@ -7,6 +7,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   initNavigation();
   initChecklist();
+  initNextAction();
   initMindmaps();
   initFaq();
   initModalidades();
@@ -143,6 +144,136 @@ function updateProgressDisplay() {
       subEl.textContent = "Status: Etapas iniciais em andamento";
     }
   }
+  refreshNextAction();
+}
+
+/* ==========================================================================
+   2b. PRÓXIMA AÇÃO (ORIENTAÇÃO POR TAREFA, NÃO POR ASSUNTO)
+   ========================================================================== */
+const VIA_STORAGE_KEY = "ufabc_via_ingresso";
+const VIAS_INGRESSO = {
+  sisu: { nome: "SiSU (ENEM)" },
+  transferencia: { nome: "Transferência externa" },
+  outro: { nome: "Outro processo" }
+};
+const LINK_CALENDARIOS = "https://prograd.ufabc.edu.br/calendarios";
+const LINK_CONTATOS = "https://prograd.ufabc.edu.br/contatos";
+
+function lerViaIngresso() {
+  const via = localStorage.getItem(VIA_STORAGE_KEY) || "";
+  return VIAS_INGRESSO[via] ? via : "";
+}
+
+function proximoPassoPendente() {
+  const savedState = JSON.parse(localStorage.getItem("ufabc_checklist_progress") || "{}");
+  return CHECKLIST_ITEMS.find(item => !savedState[item.id]) || null;
+}
+
+function refreshNextAction() {
+  const titleEl = document.getElementById("nextActionTitle");
+  const descEl = document.getElementById("nextActionDesc");
+  const controls = document.getElementById("nextActionControls");
+  const noteEl = document.getElementById("nextActionNote");
+  const openBtn = document.getElementById("nextActionOpen");
+  const doneBtn = document.getElementById("nextActionDone");
+  if (!titleEl || !descEl || !controls || !openBtn || !doneBtn) return;
+
+  const via = lerViaIngresso();
+  const pendente = proximoPassoPendente();
+
+  document.querySelectorAll("#viaSelector [data-via]").forEach(btn => {
+    const ativo = btn.dataset.via === via;
+    btn.classList.toggle("active", ativo);
+    btn.setAttribute("aria-pressed", String(ativo));
+  });
+
+  doneBtn.hidden = !via || via === "outro" || !pendente;
+
+  if (!via) {
+    titleEl.textContent = "Diga como você ingressa na UFABC";
+    descEl.textContent = "Isso muda os documentos e os prazos que você precisa conferir. A escolha fica salva apenas neste navegador.";
+    controls.hidden = true;
+    if (noteEl) noteEl.textContent = "";
+    return;
+  }
+
+  controls.hidden = false;
+
+  if (via === "outro") {
+    titleEl.textContent = "Confirme seu processo no edital oficial";
+    descEl.textContent = "Ainda não temos uma lista específica para o seu processo de ingresso neste protótipo. Consulte o edital do seu processo e fale com a ProGrad.";
+    openBtn.textContent = "Abrir contatos oficiais";
+    if (noteEl) noteEl.textContent = "O protótipo não confirma matrícula nem prazos.";
+    return;
+  }
+
+  if (!pendente) {
+    titleEl.textContent = "Você marcou todos os passos desta lista";
+    descEl.textContent = "Confira o calendário acadêmico oficial para as datas do seu quadrimestre. As datas podem mudar.";
+    openBtn.textContent = "Abrir calendário oficial";
+    if (noteEl) noteEl.textContent = "Lista do protótipo: não substitui o calendário nem o edital.";
+    return;
+  }
+
+  titleEl.textContent = pendente.title;
+  descEl.textContent = pendente.desc;
+  openBtn.textContent = "Abrir este passo";
+  if (noteEl) {
+    const restantes = CHECKLIST_ITEMS.filter(item => {
+      const savedState = JSON.parse(localStorage.getItem("ufabc_checklist_progress") || "{}");
+      return !savedState[item.id];
+    }).length;
+    noteEl.textContent = `Via escolhida: ${VIAS_INGRESSO[via].nome}. ${restantes} de ${CHECKLIST_ITEMS.length} passos pendentes.`;
+  }
+}
+
+function initNextAction() {
+  const selector = document.getElementById("viaSelector");
+  const openBtn = document.getElementById("nextActionOpen");
+  const doneBtn = document.getElementById("nextActionDone");
+  if (!selector || !openBtn || !doneBtn) return;
+
+  selector.querySelectorAll("[data-via]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      localStorage.setItem(VIA_STORAGE_KEY, btn.dataset.via);
+      refreshNextAction();
+    });
+  });
+
+  openBtn.addEventListener("click", () => {
+    const via = lerViaIngresso();
+    const pendente = proximoPassoPendente();
+    if (!via || via === "outro" || !pendente) {
+      window.open(via === "outro" ? LINK_CONTATOS : LINK_CALENDARIOS, "_blank", "noopener");
+      return;
+    }
+    const itemEl = document.getElementById(`item_${pendente.id}`);
+    if (!itemEl) return;
+    itemEl.hidden = false;
+    itemEl.classList.add("is-next");
+    itemEl.scrollIntoView({ block: "center", behavior: "smooth" });
+    const checkbox = itemEl.querySelector("input");
+    if (checkbox) checkbox.focus({ preventScroll: true });
+  });
+
+  doneBtn.addEventListener("click", () => {
+    const pendente = proximoPassoPendente();
+    if (!pendente) return;
+    const savedState = JSON.parse(localStorage.getItem("ufabc_checklist_progress") || "{}");
+    savedState[pendente.id] = true;
+    localStorage.setItem("ufabc_checklist_progress", JSON.stringify(savedState));
+    const checkbox = document.getElementById(pendente.id);
+    if (checkbox) checkbox.checked = true;
+    const itemEl = document.getElementById(`item_${pendente.id}`);
+    if (itemEl) {
+      itemEl.classList.add("completed");
+      itemEl.classList.remove("is-next");
+    }
+    updateProgressDisplay();
+    refreshNextAction();
+  });
+
+  refreshNextAction();
 }
 
 /* ==========================================================================
@@ -505,6 +636,57 @@ function initModalidades() {
 
   if (!selectorGrid) return;
 
+  const docsProgress = document.getElementById("modDocsProgress");
+
+  // Checklist de documentos: marcação local, sem envio a servidor.
+  function renderDocs(key, config) {
+    if (!docsList) return;
+    const salvos = JSON.parse(localStorage.getItem("ufabc_docs_checklist") || "{}");
+    const marcados = salvos[key] || {};
+    docsList.replaceChildren();
+
+    const atualizarProgresso = () => {
+      if (!docsProgress) return;
+      const feitos = config.docs.filter((_, index) => marcados[index]).length;
+      if (feitos === 0) {
+        docsProgress.textContent = `Nenhum dos ${config.docs.length} documentos marcados ainda.`;
+      } else if (feitos === config.docs.length) {
+        docsProgress.textContent = `Todos os ${config.docs.length} documentos separados. Confira o edital antes de enviar.`;
+      } else {
+        docsProgress.textContent = `${feitos} de ${config.docs.length} documentos separados.`;
+      }
+    };
+
+    config.docs.forEach((doc, index) => {
+      const item = document.createElement("li");
+      item.className = "doc-item";
+      const label = document.createElement("label");
+      const input = document.createElement("input");
+      input.type = "checkbox";
+      input.id = `doc_${key}_${index}`;
+      input.checked = Boolean(marcados[index]);
+      const text = document.createElement("span");
+      text.textContent = doc;
+      label.appendChild(input);
+      label.appendChild(text);
+      item.appendChild(label);
+      item.classList.toggle("checked", input.checked);
+
+      input.addEventListener("change", () => {
+        if (input.checked) marcados[index] = true;
+        else delete marcados[index];
+        salvos[key] = marcados;
+        localStorage.setItem("ufabc_docs_checklist", JSON.stringify(salvos));
+        item.classList.toggle("checked", input.checked);
+        atualizarProgresso();
+      });
+
+      docsList.appendChild(item);
+    });
+
+    atualizarProgresso();
+  }
+
   function renderDetails(key) {
     const config = MODALIDADES_CONFIG[key];
     if (!config) return;
@@ -513,9 +695,7 @@ function initModalidades() {
     if (subEl) titleEl.textContent = config.nome;
     if (subEl) subEl.textContent = config.sub;
 
-    if (docsList) {
-      docsList.innerHTML = config.docs.map(d => `<li style="margin-bottom:0.5rem; color:var(--text-main); font-size:0.88rem;">[DOCUMENTO] ${d}</li>`).join("");
-    }
+    renderDocs(key, config);
 
     if (locaisList) {
       locaisList.innerHTML = config.locais.map(l => `

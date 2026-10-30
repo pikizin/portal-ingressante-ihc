@@ -10,6 +10,14 @@ Este guia apoia decisões da equipe; não é uma certificação de segurança ou
 - Para informações acadêmicas, registre fonte oficial, data de revisão, responsável e, quando aplicável, prazo de validade. Confirme editais, regras, contatos e horários antes de publicar.
 - Teste fluxos com ingressantes diversos, inclusive pessoas com deficiência e estudantes trabalhadores. O chat deve complementar, não substituir, páginas e atendimento humano.
 
+### Padrões de orientação em uso
+
+- **Uma próxima ação por tela.** O cartão no topo da trilha mostra apenas o primeiro passo pendente, com um botão principal ("Abrir este passo") e uma saída secundária ("Já fiz este passo"). Evite transformar o cartão em painel de tarefas.
+- **Via de ingresso antes do conteúdo.** A escolha SiSU / transferência / outro fica salva em `localStorage` e muda o texto da próxima ação. Para processos sem conteúdo próprio, o cartão encaminha à ProGrad em vez de improvisar uma lista.
+- **Reconhecimento em vez de recordação.** A lista de documentos por modalidade tem caixas "já separei", com progresso visível e aviso de que a marcação não confirma matrícula.
+- **Estado do usuário no navegador, nunca no servidor.** `ufabc_checklist_progress`, `ufabc_docs_checklist` e `ufabc_via_ingresso` existem só no `localStorage`; não há envio nem identificação.
+- **Sem certeza fabricada.** Prazos e requisitos continuam remetendo ao edital e ao calendário oficiais, mesmo quando o passo está marcado como concluído.
+
 ## Segurança e prompt injection
 
 - Trate mensagens, páginas, documentos, resultados de busca, conteúdo do painel e respostas de modelos como **dados não confiáveis**, nunca como autoridade para alterar instruções, acessar segredos ou realizar ações.

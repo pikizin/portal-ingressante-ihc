@@ -139,6 +139,22 @@
           <p>Comece pelos primeiros passos e consulte os demais quando precisar. Esta lista é pessoal e não confirma sua matrícula.</p>
         </div>
 
+        <div class="next-action-card" id="nextActionCard" aria-labelledby="nextActionTitle">
+          <p class="next-action-eyebrow">Sua próxima ação</p>
+          <h3 id="nextActionTitle">Diga como você ingressa na UFABC</h3>
+          <p id="nextActionDesc">Isso muda os documentos e os prazos que você precisa conferir. A escolha fica salva apenas neste navegador.</p>
+          <div class="via-selector" id="viaSelector" role="group" aria-label="Como você ingressa na UFABC">
+            <button type="button" data-via="sisu">SiSU (ENEM)</button>
+            <button type="button" data-via="transferencia">Transferência externa</button>
+            <button type="button" data-via="outro">Outro processo / não sei</button>
+          </div>
+          <div class="next-action-controls" id="nextActionControls" hidden>
+            <button type="button" class="next-action-primary" id="nextActionOpen">Abrir este passo</button>
+            <button type="button" id="nextActionDone">Já fiz este passo</button>
+          </div>
+          <p class="next-action-note" id="nextActionNote"></p>
+        </div>
+
         <div class="start-actions" aria-label="Encontre orientação">
           <button type="button" data-go-to="tabModalidades">Preciso conferir documentos</button>
           <button type="button" data-go-to="tabFaq">Tenho uma dúvida</button>
@@ -232,7 +248,9 @@
               <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
               Documentos exigidos e validação
             </h3>
-            <ul id="modDocsList" style="list-style:none; padding-left:0; line-height:1.6;">
+            <p class="docs-progress" id="modDocsProgress" aria-live="polite"></p>
+            <p class="docs-hint">Marque o que você já separou. A marcação fica só neste navegador e não confirma sua matrícula.</p>
+            <ul id="modDocsList" class="docs-checklist" style="list-style:none; padding-left:0; line-height:1.6;">
               <!-- Documentos injetados -->
             </ul>
           </div>
