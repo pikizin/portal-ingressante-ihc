@@ -425,13 +425,14 @@
         </div>
       </section>
 
-      <!-- TAB 7: PAINEL IHC SHOWCASE -->
+            <!-- TAB 7: PAINEL IHC SHOWCASE -->
       <section class="content-section" id="tabIhc" aria-labelledby="ihcHeading">
         <div class="section-heading">
           <h2 id="ihcHeading">Painel teórico: decisões de design e IHC</h2>
-          <p>Mapeamento das 10 Heurísticas de Jakob Nielsen, Princípios de Donald Norman e Diretrizes WCAG implementadas no protótipo.</p>
+          <p>Mapeamento das 10 Heurísticas de Jakob Nielsen, Princípios de Donald Norman e Diretrizes WCAG 2.2 implementadas no protótipo.</p>
         </div>
 
+        <h3 class="subsection-title">10 Heurísticas de Usabilidade (Jakob Nielsen)</h3>
         <div class="cards-grid">
           <div class="ui-card">
             <div class="card-header">
@@ -444,22 +445,82 @@
               </div>
             </div>
             <div class="card-body">
-              A barra de progresso do checklist no topo do portal atualiza visualmente e em tempo real a conclusão das etapas de acolhimento do calouro com persistência no navegador.
+              Barras de progresso em tempo real na tela inicial e na trilha de acolhimento (ex.: 0/8 passos concluídos), além de contadores dinâmicos no checklist de documentos salvos no navegador.
             </div>
           </div>
 
           <div class="ui-card">
             <div class="card-header">
               <div class="card-icon-wrapper">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4"></path><path d="M12 16h.01"></path></svg>
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"></path><path d="M2 12h20"></path></svg>
               </div>
               <div class="card-title-group">
-                <span class="card-tag">Heurística 2 &amp; 6</span>
-                <h3>Mundo real e reconhecimento</h3>
+                <span class="card-tag">Heurística 2</span>
+                <h3>Compatibilidade com o mundo real</h3>
               </div>
             </div>
             <div class="card-body">
-              Mapas mentais no padrão Mermaid transformam regras textuais burocráticas em diagramas de decisão limpos, e o FAQ responde em linguagem humana às dores reais dos alunos.
+              Linguagem de acolhimento centrada no estudante, traduzindo termos acadêmicos burocráticos (T-P-I, RU, fretado, SIGAA e quadrimestre) e explicando siglas no próprio fluxo com tags semânticas.
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Heurística 3</span>
+                <h3>Controle e liberdade do usuário</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Navegação não-linear entre as abas sem bloqueio de fluxo, liberdade para marcar e desmarcar passos ou documentos a qualquer momento e facilidade de alternar a via de ingresso selecionada.
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Heurística 4</span>
+                <h3>Consistência e padrões</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Padronização de cores, tipografia, bordas e botões em todas as seções; atalho universal de busca (<code>Ctrl + K</code>) e convenções de interface consolidadas na web moderna.
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Heurística 5</span>
+                <h3>Prevenção de erros</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Avisos visuais destacados alertando que o checklist é pessoal e não confirma matrícula; controles de Próxima Ação desabilitados até a seleção da via de ingresso, evitando orientações incorretas.
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Heurística 6</span>
+                <h3>Reconhecimento em vez de recordação</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Catálogo de cursos estruturado com os 5 cursos de ingresso e 29 formações com durações, campi e links diretos em acordeões visíveis; checklist de documentos específico por cota sem exigir que o aluno decore o edital.
             </div>
           </div>
 
@@ -474,22 +535,178 @@
               </div>
             </div>
             <div class="card-body">
-              Busca global imediata através do atalho <code>Ctrl + K</code>, filtros instantâneos por modalidade de cota e por categorias de dúvidas frequentes.
+              Três portas de entrada direcionadas na Home (para quem está começando, quem já enviou documentos ou quem tem dúvidas rápidas), busca global instantânea por teclado e filtros por modalidade.
             </div>
           </div>
 
           <div class="ui-card">
             <div class="card-header">
               <div class="card-icon-wrapper">
-                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor"></path></svg>
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
               </div>
               <div class="card-title-group">
-                <span class="card-tag">Acessibilidade universal</span>
-              <h3>Recursos de acessibilidade</h3>
+                <span class="card-tag">Heurística 8</span>
+                <h3>Design estético e minimalista</h3>
               </div>
             </div>
             <div class="card-body">
-              Ajuste de fonte, alto contraste e modo escuro. A acessibilidade precisa ser verificada com testes automatizados e manuais.
+              Foco no princípio de "uma próxima ação por tela", remoção de telas e elementos visuais desnecessários e ausência total de emojis para preservar um ambiente limpo e sem distrações cognitivas.
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Heurística 9</span>
+                <h3>Reconhecer e recuperar-se de erros</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Mecanismos transparentes de recuperação: desmarcar um passo restaura a ação pendente imediatamente; a busca trata termos sem acento e sugere tópicos oficiais claros.
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Heurística 10</span>
+                <h3>Ajuda e documentação</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Central de Dúvidas Frequentes (FAQ) categorizada por temas essenciais, glossário de siglas acadêmicas da UFABC e links diretos para as páginas e canais de atendimento oficial da ProGrad.
+            </div>
+          </div>
+        </div>
+
+        <h3 class="subsection-title">Princípios Fundamentais do Design (Donald Norman)</h3>
+        <div class="cards-grid">
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Princípio Norman</span>
+                <h3>Affordance e Significantes (Signifiers)</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Botões e cartões interativos possuem estados visuais explícitos (hover, active e focus-visible); badges indicam claramente os campi e as categorias, e o campo de busca sinaliza visualmente o atalho <code>Ctrl K</code>.
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Princípio Norman</span>
+                <h3>Mapeamento natural (Mapping)</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              A ordem das tarefas na trilha respeita a linha do tempo real do ingressante: envio de documentos primeiro, criação de e-mail institucional, acesso ao SIGAA, carteirinha, alimentação/transporte e início das aulas.
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Princípio Norman</span>
+                <h3>Feedback contínuo</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Toda ação do usuário gera retorno imediato: o clique no checklist anima e avança a barra de progresso, a seleção de cotas atualiza a lista de documentos e o status da próxima ação se adapta na hora.
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">Princípio Norman</span>
+                <h3>Restrições (Constraints)</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Restrição lógica no cartão da Home: os controles de ação ficam ocultos até que o ingressante selecione a via de entrada (SiSU, transferência, etc.), impedindo conclusões precipitadas fora do seu perfil.
+            </div>
+          </div>
+        </div>
+
+        <h3 class="subsection-title">Diretrizes de Acessibilidade Digital (WCAG 2.2 AA)</h3>
+        <div class="cards-grid">
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a10 10 0 0 1 0 20z" fill="currentColor"></path></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">WCAG 1</span>
+                <h3>Perceptível (Contraste e Modos Visuais)</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Contraste de texto rigorosamente acima de 4.5:1 para texto normal e 3:1 para texto grande; modo de Alto Contraste dedicado, suporte a tema escuro/claro e botões de aumento de fonte (A+ e A-).
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2" ry="2"></rect><line x1="6" y1="8" x2="6" y2="8"></line><line x1="10" y1="8" x2="10" y2="8"></line><line x1="14" y1="8" x2="14" y2="8"></line><line x1="18" y1="8" x2="18" y2="8"></line><line x1="6" y1="12" x2="6" y2="12"></line><line x1="10" y1="12" x2="10" y2="12"></line><line x1="14" y1="12" x2="14" y2="12"></line><line x1="18" y1="12" x2="18" y2="12"></line><line x1="7" y1="16" x2="17" y2="16"></line></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">WCAG 2</span>
+                <h3>Operável (Navegação por Teclado e Foco)</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Link de salto (<code>skip-link</code>) no início do HTML para ir direto ao conteúdo principal; navegação por teclado completa via <code>Tab</code>, <code>Enter</code> e <code>Esc</code> sem armadilhas de foco (focus traps).
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">WCAG 3</span>
+                <h3>Compreensível (Semântica e ARIA)</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Estrutura hierárquica semântica de cabeçalhos (<code>h1</code> a <code>h4</code>), uso de <code>aria-live</code> para atualizações de progresso, <code>aria-expanded</code> em acordeões e <code>&lt;abbr&gt;</code> para expansão de siglas.
+            </div>
+          </div>
+
+          <div class="ui-card">
+            <div class="card-header">
+              <div class="card-icon-wrapper">
+                <svg viewBox="0 0 24 24"><path d="M16.5 9.4 7.55 4.24a1.78 1.78 0 0 0-2.5 1.55v12.42a1.78 1.78 0 0 0 2.5 1.55L16.5 14.6a1.78 1.78 0 0 0 0-3.2z"></path></svg>
+              </div>
+              <div class="card-title-group">
+                <span class="card-tag">WCAG 4</span>
+                <h3>Robusto (Padrões da Web)</h3>
+              </div>
+            </div>
+            <div class="card-body">
+              Construído com HTML5 e JavaScript padrão do navegador, assegurando interpretação correta por múltiplos agentes de usuário e compatibilidade com leitores de tela em qualquer plataforma.
             </div>
           </div>
         </div>
