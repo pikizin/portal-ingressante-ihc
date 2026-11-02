@@ -1,3 +1,11 @@
+# Arquivos de desenvolvimento, testes e notas internas
+*.mjs
+*.json
+*.md
+!README.md
+mermaid.min.js
+
+# Sistema operacional e caches
 desktop.ini
 Thumbs.db
 *.log

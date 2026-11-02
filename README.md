@@ -67,74 +67,41 @@ O projeto foi construído e avaliado com base em três pilares teóricos da áre
 ```text
 ├── index.html          # Estrutura semântica e acessível do portal
 ├── app.css             # Estilização completa, temas claro/escuro e alto contraste
-├── app.js              # Lógica de interface, navegação, busca e persistência
-├── base-oficial.json   # Base estruturada de trechos acadêmicos verificados
-├── busca-oficial.mjs   # Módulo de busca por palavras-chave e relevância
-├── servidor-local.mjs  # Servidor HTTP local de apoio para desenvolvimento
-├── testes-ui-cdp.mjs   # Testes automatizados de interface no Chrome real via CDP
-├── testes-busca.mjs    # Testes automatizados de validação de busca
-├── GUIA_PROJETO.md     # Guia de diretrizes de design, segurança e fontes oficiais
-├── TESTES_UI.md        # Documentação dos cenários de teste e execução
-└── README.md           # Apresentação do projeto e instruções de uso
+├── app.js              # Lógica de interface, catálogo de cursos, busca e persistência
+├── README.md           # Apresentação do projeto e instruções de uso
+└── .gitignore          # Regras de exclusão de arquivos de desenvolvimento
 ```
 
 ---
 
 ## 5. Como Executar
 
-Por ser uma aplicação web estática nativa, o protótipo não exige compilação ou processos de build.
+Por ser uma aplicação web estática nativa (`HTML5`, `CSS3` e `Vanilla JavaScript`), o protótipo não exige compilação, dependências `npm` ou processos de build.
 
 ### Opção A: Execução direta no navegador
-Basta abrir o arquivo `index.html` em qualquer navegador web moderno.
+Basta abrir o arquivo `index.html` diretamente em qualquer navegador web moderno (Chrome, Firefox, Safari, Edge).
 
-### Opção B: Servidor local de apoio (Node.js)
-Para testar a aplicação com servidor local simulado na porta 4173:
+### Opção B: Servidor HTTP estático local
+Se desejar rodar através de um servidor local:
 
 ```powershell
-node servidor-local.mjs
+# Usando npx serve
+npx serve .
+
+# Ou usando Python
+python -m http.server 8080
 ```
 
-Em seguida, acesse no navegador: `http://localhost:4173`
+Em seguida, acesse no navegador: `http://localhost:8080` (ou a porta informada).
 
 ---
 
-## 6. Testes Automatizados
+## 6. Publicação do MVP (GitHub Pages)
 
-O repositório possui suíte de testes cobrindo interface gráfica e regras de dados.
+Como a aplicação é 100% estática, a publicação pode ser realizada no GitHub Pages sem etapas adicionais:
 
-### Testes sem navegador (regras e validações de busca)
-```powershell
-node --test testes-busca.mjs testes-chat.mjs
-```
-
-### Testes de interface no Chrome real (via Chrome DevTools Protocol)
-Testa os 31 cenários funcionais da interface (navegação, acordeões de cursos, persistência em `localStorage`, atalhos e acessibilidade):
-
-```powershell
-# 1. Inicie o servidor local em um terminal
-node servidor-local.mjs
-
-# 2. Inicie o Chrome em modo headless com porta de depuração (terminal 2)
-$chrome = "C:\Program Files\Google\Chrome\Application\chrome.exe"
-Start-Process $chrome -ArgumentList "--headless=new","--remote-debugging-port=9222","about:blank"
-
-# 3. Execute os testes automatizados
-node testes-ui-cdp.mjs
-```
-
----
-
-## 7. Publicação do MVP (GitHub Pages)
-
-Como a aplicação é 100% estática (`HTML`, `CSS`, `Vanilla JS`), a publicação pode ser realizada no GitHub Pages sem nenhum bundler:
-
-1. Faça o push do repositório para o GitHub:
-   ```powershell
-   git remote add origin https://github.com/SEU_USUARIO/portal-ingressante-ufabc.git
-   git branch -M main
-   git push -u origin main
-   ```
-2. No repositório no GitHub, acesse **Settings > Pages**.
-3. Em **Source**, selecione a branch `main` e a pasta `/ (root)`.
-4. O portal estará publicado e acessível publicamente via HTTPS.
+1. No repositório no GitHub, acesse **Settings > Pages**.
+2. Em **Build and deployment > Source**, selecione **Deploy from a branch**.
+3. Escolha a branch `main` e a pasta `/ (root)`.
+4. Clique em **Save**. O portal estará publicado e acessível publicamente via HTTPS.
 
