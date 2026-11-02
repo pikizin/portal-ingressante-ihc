@@ -140,18 +140,32 @@
           <p>São três entradas possíveis. Escolha a que parece mais com a sua situação agora; você pode trocar depois.</p>
         </div>
 
-        <div class="home-choices" role="group" aria-label="Escolha por onde começar">
-          <button type="button" class="home-choice" data-home-choice="comecar">
-            <span class="home-choice-title">Vou começar agora</span>
-            <span class="home-choice-desc">Ir para o primeiro passo pendente da trilha.</span>
+        <div class="home-choices-list" role="group" aria-label="Escolha por onde começar">
+          <button type="button" class="home-choice-item is-primary" data-home-choice="comecar">
+            <div class="home-choice-content">
+              <div class="home-choice-header">
+                <span class="home-choice-badge">Principal</span>
+                <span class="home-choice-title">Vou começar agora</span>
+              </div>
+              <span class="home-choice-desc">Ir direto para o primeiro passo pendente da trilha de acolhimento.</span>
+            </div>
+            <svg class="home-choice-arrow" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </button>
-          <button type="button" class="home-choice" data-home-choice="documentos">
-            <span class="home-choice-title">Já enviei os documentos</span>
-            <span class="home-choice-desc">Conferir a lista de documentos por modalidade de ingresso.</span>
+
+          <button type="button" class="home-choice-item" data-home-choice="documentos">
+            <div class="home-choice-content">
+              <span class="home-choice-title">Já enviei os documentos</span>
+              <span class="home-choice-desc">Conferir a lista de documentos por modalidade de ingresso.</span>
+            </div>
+            <svg class="home-choice-arrow" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </button>
-          <button type="button" class="home-choice" data-home-choice="duvida">
-            <span class="home-choice-title">Tenho uma dúvida</span>
-            <span class="home-choice-desc">Consultar as perguntas frequentes e tirar dúvidas.</span>
+
+          <button type="button" class="home-choice-item" data-home-choice="duvida">
+            <div class="home-choice-content">
+              <span class="home-choice-title">Tenho uma dúvida</span>
+              <span class="home-choice-desc">Consultar as perguntas frequentes e tirar dúvidas.</span>
+            </div>
+            <svg class="home-choice-arrow" viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
           </button>
         </div>
 
