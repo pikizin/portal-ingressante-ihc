@@ -7,7 +7,7 @@
   <title>UFABC Ingressante // Hub Interativo de Acolhimento</title>
   <link rel="stylesheet" href="app.css">
   <!-- Mermaid local offline -->
-  <script src="mermaid.min.js"></script>
+  <!-- <script src="mermaid.min.js"></script> -->
 </head>
 <body>
   <a class="skip-link" href="#mainContent">Ir para o conteúdo principal</a>
@@ -59,21 +59,15 @@
             </button>
           </li>
           <li>
-            <button class="nav-item-btn" data-target="tabChat">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5 9 9 0 0 1-4-.9L3 21l1.9-5.5A8.5 8.5 0 1 1 21 11.5z"></path></svg>
-              <span>Conversar sobre meus primeiros passos</span>
-            </button>
-          </li>
-          <li>
             <button class="nav-item-btn" data-target="tabChecklist">
               <svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"></path><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>
               <span>Trilha do ingressante</span>
             </button>
           </li>
           <li>
-            <button class="nav-item-btn" data-target="tabMapas">
-              <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-              <span>Mapas mentais e fluxos</span>
+            <button class="nav-item-btn" data-target="tabCursos">
+              <svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"></path><path d="M6 12v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"></path></svg>
+              <span>Cursos e como se entra</span>
             </button>
           </li>
           <li>
@@ -157,7 +151,7 @@
           </button>
           <button type="button" class="home-choice" data-home-choice="duvida">
             <span class="home-choice-title">Tenho uma dúvida</span>
-            <span class="home-choice-desc">Conversar sobre os primeiros passos ou procurar no FAQ.</span>
+            <span class="home-choice-desc">Consultar as perguntas frequentes e tirar dúvidas.</span>
           </button>
         </div>
 
@@ -201,9 +195,9 @@
 
         <div class="start-actions" aria-label="Encontre orientação">
           <button type="button" data-go-to="tabModalidades">Preciso conferir documentos</button>
+          <button type="button" data-go-to="tabCursos">Quero entender os cursos</button>
           <button type="button" data-go-to="tabFaq">Tenho uma dúvida</button>
           <button type="button" data-go-to="tabCampus">Vou conhecer o campus</button>
-          <button type="button" data-go-to="tabChat">Quero conversar sobre meus primeiros passos</button>
         </div>
         <p class="prototype-notice"><strong>Protótipo:</strong> informações, documentos e prazos precisam ser confirmados nas fontes oficiais da UFABC e no edital do seu processo de ingresso.</p>
 
@@ -213,65 +207,74 @@
         <button class="show-more-btn" id="showMoreChecklist" type="button" aria-expanded="false" aria-controls="checklistItemsList">Mostrar todos os passos</button>
       </section>
 
-      <section class="content-section" id="tabChat" aria-labelledby="chatHeading">
+      <section class="content-section" id="tabCursos" aria-labelledby="cursosHeading">
         <div class="section-heading">
-          <h2 id="chatHeading">Vamos começar juntos</h2>
-          <p>Escolha um assunto ou escreva uma dúvida curta. Você não precisa saber tudo agora.</p>
-        </div>
-        <div class="prototype-notice">
-          <strong>Protótipo:</strong> não é atendimento oficial. Confira editais, prazos e documentos nas fontes oficiais. Não escreva dados pessoais, senhas ou informações médicas.
-        </div>
-        <div class="chat-panel">
-          <p>No modo padrão, as respostas são prontas e não são enviadas a servidor. Com a IA local ativada, cada pergunta é enviada ao serviço local e ao Ollama neste computador; não envie dados sensíveis. As mensagens visíveis desaparecem ao recarregar a página.</p>
-          <label class="chat-mode"><input id="chatUseAI" type="checkbox"> Usar IA local experimental (requer servidor local)</label>
-          <div class="chat-suggestions" role="group" aria-label="Assuntos sugeridos">
-            <button type="button" data-chat-topic="inicio">Não sei por onde começar</button>
-            <button type="button" data-chat-topic="matricula">Matrícula e documentos</button>
-            <button type="button" data-chat-topic="aulas">Início das aulas</button>
-            <button type="button" data-chat-topic="apoio">Preciso de ajuda</button>
-          </div>
-          <div id="chatMessages" class="chat-messages" role="log" aria-label="Conversa" aria-live="polite" aria-relevant="additions">
-            <div class="chat-message chat-assistant"><strong>Orientação:</strong> Estou aqui para ajudar você a encontrar um primeiro passo. Escolha um assunto ou escreva sua dúvida.</div>
-          </div>
-          <p id="chatStatus" role="status" aria-live="polite"></p>
-          <form id="chatForm" class="chat-form">
-            <label for="chatInput">Sua dúvida, sem dados pessoais</label>
-            <div class="chat-form-row">
-              <input id="chatInput" type="text" maxlength="300" autocomplete="off" placeholder="Ex.: como encontro o edital?">
-              <button type="submit">Enviar</button>
-            </div>
-          </form>
-          <p class="chat-support">Para atendimento humano, consulte os <a href="https://prograd.ufabc.edu.br/contatos">contatos oficiais da Pró-Reitoria de Graduação</a>.</p>
-        </div>
-      </section>
-
-      <!-- TAB 2: MAPAS MENTAIS & FLUXOS ESTILO MERMAID -->
-      <section class="content-section" id="tabMapas" aria-labelledby="mapasHeading">
-        <div class="section-heading">
-          <h2 id="mapasHeading">Mapas mentais e fluxogramas interativos</h2>
-          <p>Visualizações esquemáticas dos processos mais complexos da UFABC, organizadas para facilitar a retenção visual e tomada de decisão.</p>
+          <h2 id="cursosHeading">Cursos: você entra em um e se forma em outro</h2>
+          <p>Na UFABC não se entra direto no curso do diploma. Você entra em um <strong>curso de ingresso</strong> e escolhe a <strong>formação específica</strong> durante a graduação.</p>
         </div>
 
-        <div class="mindmap-selector-bar" role="group" aria-label="Seleção de mapas mentais">
-          <button class="mindmap-tab-btn active" data-map="matricula" type="button">1ª vs 2ª matrícula</button>
-          <button class="mindmap-tab-btn" data-map="interdisciplinar" type="button">Arquitetura interdisciplinar (pós-BI)</button>
-          <button class="mindmap-tab-btn" data-map="transferencia" type="button">Troca de curso (Res. 250)</button>
-          <button class="mindmap-tab-btn" data-map="trancamento" type="button">Trancamento total (Res. 243)</button>
+        <div class="course-callout">
+          <p><strong>Em uma frase:</strong> o curso de ingresso é a porta de entrada — <abbr title="Bacharelado em Ciência e Tecnologia">BC&amp;T</abbr>, <abbr title="Bacharelado em Ciências e Humanidades">BC&amp;H</abbr>, <abbr title="Licenciatura em Ciências Humanas">LCH</abbr>, <abbr title="Licenciatura em Ciências Naturais e Exatas">LCNE</abbr> ou <abbr title="Licenciatura em Educação das Infâncias, Linguagens e Artes">LEILA</abbr>. A formação específica é o que aparece no seu diploma. Quem faz os dois percursos pode sair com dois diplomas.</p>
         </div>
 
-        <div class="mindmap-canvas-card">
-          <div>
-            <h3 id="mindmapActiveTitle" style="font-size:1.15rem; font-weight:700; margin-bottom:0.35rem;">1ª matrícula (automática) vs 2ª matrícula (ajuste e prioridades)</h3>
-            <div class="mindmap-caption" id="mindmapActiveCaption">
-              No 1º quadrimestre, o ingressante não escolhe disciplinas; a ProGrad realiza a matrícula automática em turmas introdutórias. A partir do 2º quadrimestre, o estudante escolhe suas turmas e concorre por prioridade regulamentar.
-            </div>
-          </div>
+        <h3 class="subsection-title">Os cinco cursos de ingresso</h3>
+        <p class="subsection-hint">Abra um curso para ver as formações específicas que ele permite e em qual campus cada uma fica.</p>
+        <div class="course-list" id="courseList">
+          <!-- Injetado via app.js -->
+        </div>
+        <p class="subsection-hint">Além desses, a UFABC oferece a Licenciatura em Educação do Campo – Ciências Humanas e Sociais, com ingresso próprio.</p>
 
-          <div class="mermaid-wrapper">
-            <div class="mermaid" id="mermaidContainer">
-              <!-- Mermaid diagram code rendered via app.js -->
-            </div>
+        <h3 class="subsection-title">Como é o ano: três quadrimestres</h3>
+        <div class="course-grid">
+          <div class="course-card">
+            <h4>Três períodos, não dois</h4>
+            <p>O ano letivo é dividido em três quadrimestres de 12 semanas: fevereiro a maio, junho a agosto e setembro a dezembro. Cada quadrimestre tem matrícula e grade próprias.</p>
           </div>
+          <div class="course-card">
+            <h4>Entrada no 2º quadrimestre</h4>
+            <p>O ingresso principal acontece uma vez por ano, no 2º quadrimestre — por isso calouros costumam começar as aulas entre maio e junho.</p>
+          </div>
+          <div class="course-card">
+            <h4>Primeiro quadrimestre sem escolher disciplinas</h4>
+            <p>No quadrimestre de entrada a matrícula nas disciplinas é automática. A escolha de turmas por prioridade começa no quadrimestre seguinte.</p>
+          </div>
+          <div class="course-card">
+            <h4>Quanto tempo dura</h4>
+            <p>Os bacharelados interdisciplinares (BC&amp;T e BC&amp;H) têm 3 anos previstos; as licenciaturas interdisciplinares (LCH e LCNE), 4 anos. Nas formações específicas o prazo varia e está no projeto pedagógico de cada curso.</p>
+          </div>
+        </div>
+
+        <h3 class="subsection-title">Como se entra</h3>
+        <ul class="entry-list">
+          <li><strong>SiSU (ENEM)</strong> — a maior parte das vagas. O edital de cada ano define cursos, vagas, cotas e cronograma.</li>
+          <li><strong>PROEP-ABC</strong> — vagas reservadas para egressos de escolas públicas do Grande ABC.</li>
+          <li><strong>Vagas olímpicas</strong> — para premiados em olimpíadas de conhecimento e competições científicas.</li>
+          <li><strong>Transferência externa</strong> — para quem já estuda em outra universidade.</li>
+          <li><strong>Egressos de cursos interdisciplinares</strong> — matrícula em formação específica para quem concluiu um curso interdisciplinar em outra instituição.</li>
+        </ul>
+        <p class="subsection-hint">Todas essas formas têm edital próprio, com regras e prazos que mudam a cada ano. Confira antes de contar com uma delas.</p>
+
+        <h3 class="subsection-title">Bacharelado, engenharia ou licenciatura</h3>
+        <div class="course-grid">
+          <div class="course-card">
+            <h4>Bacharelado</h4>
+            <p>Formação generalista, com base sólida em uma área do conhecimento. É o caso dos bacharelados interdisciplinares e de cursos como Ciência da Computação e Ciências Econômicas.</p>
+          </div>
+          <div class="course-card">
+            <h4>Engenharia</h4>
+            <p>Formação que confere o grau de engenheiro, com projeto pedagógico próprio. Na UFABC as engenharias são formações específicas do BC&amp;T.</p>
+          </div>
+          <div class="course-card">
+            <h4>Licenciatura</h4>
+            <p>Formação para dar aulas no ensino fundamental e médio, na área em que você se formou.</p>
+          </div>
+        </div>
+
+        <div class="source-note">
+          <strong>Fontes:</strong>
+          <a href="https://prograd.ufabc.edu.br/cursos" target="_blank" rel="noopener">ProGrad — Cursos de graduação</a> (cursos de ingresso, formações específicas, campi e duração),
+          <a href="https://prograd.ufabc.edu.br/calendarios" target="_blank" rel="noopener">ProGrad — Calendários</a> (quadrimestres e datas).
+          Verificado em 30/10/2026. Vagas, cotas e cronograma mudam a cada edital: esta página explica a estrutura, não substitui o edital do seu ano.
         </div>
       </section>
 
@@ -519,6 +522,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=20261030a"></script>
+  <script src="app.js?v=20261030b"></script>
 </body>
 </html>

@@ -34,6 +34,12 @@ const casos = [
   { pergunta: 'tem iniciação científica?', esperado: /inicia[çc][aã]o cient[ií]fica|pesquisa/i },
   { pergunta: 'o que é coeficiente de aproveitamento?', esperado: /coeficiente de aproveitamento|\bca\b/i },
   { pergunta: 'quais atividades contam como horas complementares?', esperado: /complementar|extensionista/i },
+  // Conteúdo sobre cursos: a resposta precisa vir de fonte oficial, não do material do usuário.
+  { pergunta: 'quais cursos a UFABC tem?', esperado: /curso de ingresso|forma[çc][ãa]o espec[ií]fica/i, oficial: true },
+  { pergunta: 'tem engenharia aeroespacial?', esperado: /aeroespacial/i },
+  { pergunta: 'quero ser professor de geografia', esperado: /geografia/i, oficial: true },
+  { pergunta: 'tem pedagogia?', esperado: /pedagogia/i, oficial: true },
+  { pergunta: 'quanto tempo dura o curso de engenharia?', esperado: /dura|quadrimestre|ano/i, oficial: true },
 ];
 
 const hibrido = process.argv.includes('--hibrido');
@@ -51,7 +57,8 @@ const falhas = [];
 for (const caso of casos) {
   const trechos = await search.search(caso.pergunta);
   const texto = trechos.map(t => `${t.title} ${t.excerpt}`).join(' ');
-  const ok = trechos.length > 0 && caso.esperado.test(texto);
+  const daFonteCerta = !caso.oficial || trechos.some(t => t.source_type === 'oficial');
+  const ok = trechos.length > 0 && caso.esperado.test(texto) && daFonteCerta;
   if (ok) acertos++;
   else falhas.push({ pergunta: caso.pergunta, titulos: trechos.map(t => t.title) });
   console.log(`${ok ? 'OK  ' : 'FALHA'} | ${caso.pergunta}`);

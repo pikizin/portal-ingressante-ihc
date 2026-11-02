@@ -9,13 +9,14 @@ document.addEventListener("DOMContentLoaded", () => {
   initHome();
   initChecklist();
   initNextAction();
-  initMindmaps();
+  initCursos();
+  // initMindmaps();
   initFaq();
   initModalidades();
   initGlossary();
   initGlobalSearch();
   initAccessibility();
-  initChat();
+  // initChat();
 });
 
 /* ==========================================================================
@@ -107,7 +108,7 @@ function initHome() {
         irParaSecao("tabModalidades");
         return;
       }
-      irParaSecao("tabChat");
+      irParaSecao("tabFaq");
     });
   });
 }
@@ -326,6 +327,136 @@ function initNextAction() {
   });
 
   refreshNextAction();
+}
+
+/* ==========================================================================
+   2c. CURSOS: INGRESSO E FORMAÇÃO ESPECÍFICA
+   Fonte: https://prograd.ufabc.edu.br/cursos (consultado em 30/10/2026)
+   ========================================================================== */
+const CURSOS_INGRESSO = [
+  {
+    id: "bct",
+    sigla: "BC&T",
+    nome: "Bacharelado em Ciência e Tecnologia",
+    url: "https://prograd.ufabc.edu.br/bct",
+    campi: "Santo André e São Bernardo do Campo",
+    duracao: "3 anos previstos (9 quadrimestres)",
+    grupos: [
+      { titulo: "Bacharelados · Santo André", itens: [["Biotecnologia", "bb"], ["Ciência da Computação", "bcc"], ["Ciência de Dados", "bcd"], ["Ciências Biológicas", "bcb"], ["Física", "bfis"], ["Matemática", "bm"], ["Química", "bq"]] },
+      { titulo: "Bacharelados · São Bernardo do Campo", itens: [["Neurociência", "bn"]] },
+      { titulo: "Engenharias · Santo André", itens: [["Ambiental e Urbana", "eau"], ["Energia", "ee"], ["Informação", "ei"], ["Instrumentação, Automação e Robótica", "eiar"], ["Materiais", "em"]] },
+      { titulo: "Engenharias · São Bernardo do Campo", itens: [["Aeroespacial", "ea"], ["Biomédica", "eb"], ["Gestão", "eg"]] }
+    ]
+  },
+  {
+    id: "bch",
+    sigla: "BC&H",
+    nome: "Bacharelado em Ciências e Humanidades",
+    url: "https://prograd.ufabc.edu.br/bch",
+    campi: "São Bernardo do Campo",
+    duracao: "3 anos previstos (9 quadrimestres)",
+    grupos: [
+      { titulo: "Bacharelados · São Bernardo do Campo", itens: [["Ciências Econômicas", "bce"], ["Filosofia", "bfil"], ["Planejamento Territorial", "bpt"], ["Políticas Públicas", "bpp"], ["Relações Internacionais", "bri"]] }
+    ]
+  },
+  {
+    id: "lch",
+    sigla: "LCH",
+    nome: "Licenciatura em Ciências Humanas",
+    url: "https://prograd.ufabc.edu.br/lch",
+    campi: "São Bernardo do Campo",
+    duracao: "4 anos previstos (12 quadrimestres)",
+    grupos: [
+      { titulo: "Licenciaturas · São Bernardo do Campo", itens: [["Filosofia", "lfil"], ["Geografia", "lg"], ["História", "lh"]] }
+    ]
+  },
+  {
+    id: "lcne",
+    sigla: "LCNE",
+    nome: "Licenciatura em Ciências Naturais e Exatas",
+    url: "https://prograd.ufabc.edu.br/lcne",
+    campi: "Santo André",
+    duracao: "4 anos previstos (12 quadrimestres)",
+    grupos: [
+      { titulo: "Licenciaturas · Santo André", itens: [["Ciências Biológicas", "lcb"], ["Física", "lfis"], ["Matemática", "lm"], ["Química", "lq"]] }
+    ]
+  },
+  {
+    id: "leila",
+    sigla: "LEILA",
+    nome: "Licenciatura em Educação das Infâncias, Linguagens e Artes",
+    url: "https://prograd.ufabc.edu.br/leila",
+    campi: "Santo André",
+    duracao: "Prazo no projeto pedagógico do curso",
+    grupos: [
+      { titulo: "Licenciatura · Santo André", itens: [["Pedagogia", "lp"]] }
+    ]
+  }
+];
+
+function initCursos() {
+  const lista = document.getElementById("courseList");
+  if (!lista) return;
+
+  CURSOS_INGRESSO.forEach(curso => {
+    const totalFormacoes = curso.grupos.reduce((soma, grupo) => soma + grupo.itens.length, 0);
+
+    const detalhe = document.createElement("details");
+    detalhe.className = "course-item";
+    detalhe.id = `curso_${curso.id}`;
+
+    const resumo = document.createElement("summary");
+    const sigla = document.createElement("span");
+    sigla.className = "course-item-name";
+    sigla.textContent = curso.sigla;
+    const nome = document.createElement("span");
+    nome.className = "course-item-full";
+    nome.textContent = curso.nome;
+    const meta = document.createElement("span");
+    meta.className = "course-item-meta";
+    const rotulo = totalFormacoes === 1 ? "formação" : "formações";
+    meta.textContent = `${totalFormacoes} ${rotulo} · ${curso.campi}`;
+    resumo.append(sigla, nome, meta);
+
+    const corpo = document.createElement("div");
+    corpo.className = "course-item-body";
+
+    const linha = document.createElement("p");
+    linha.className = "course-item-summary";
+    const linkCurso = document.createElement("a");
+    linkCurso.href = curso.url;
+    linkCurso.target = "_blank";
+    linkCurso.rel = "noopener";
+    linkCurso.textContent = "Página oficial do curso";
+    linha.append(`${curso.duracao}. `);
+    linha.appendChild(linkCurso);
+
+    corpo.appendChild(linha);
+
+    curso.grupos.forEach(grupo => {
+      const titulo = document.createElement("p");
+      titulo.className = "course-group-title";
+      titulo.textContent = grupo.titulo;
+
+      const itens = document.createElement("ul");
+      itens.className = "course-tags";
+      grupo.itens.forEach(([nomeFormacao, slug]) => {
+        const item = document.createElement("li");
+        const link = document.createElement("a");
+        link.href = `https://prograd.ufabc.edu.br/cursos/${slug}`;
+        link.target = "_blank";
+        link.rel = "noopener";
+        link.textContent = nomeFormacao;
+        item.appendChild(link);
+        itens.appendChild(item);
+      });
+
+      corpo.append(titulo, itens);
+    });
+
+    detalhe.append(resumo, corpo);
+    lista.appendChild(detalhe);
+  });
 }
 
 /* ==========================================================================
@@ -935,7 +1066,6 @@ function initGlobalSearch() {
       ...CHECKLIST_ITEMS.map(i => ({ title: i.title, desc: i.desc, tab: "tabChecklist", type: "Trilha" })),
       ...FAQ_DATA.map(f => ({ title: f.q, desc: f.a, tab: "tabFaq", type: "Dúvidas frequentes", faq: true })),
       ...ESSENTIAL_SIGLAS.map(g => ({ title: `${g.sigla} - ${g.nome}`, desc: g.desc, tab: "tabSiglas", type: "Siglas" })),
-      { title: "Mapas Mentais de Matrícula e Cursos", desc: "Visualizações do sistema de 1ª e 2ª matrícula, transferência e pós-BI.", tab: "tabMapas", type: "Mapas" },
       { title: "Lugares e Documentos por Modalidade", desc: "Acesso direcionado para Ampla Concorrência, Cotas de Renda, Escola Pública e PCD.", tab: "tabModalidades", type: "Modalidades" },
       { title: "Guia de Bloco A (Campus Santo André)", desc: "Torres 1, 2 e 3 e conexões nos andares 0, 1 e 2.", tab: "tabCampus", type: "Campus" }
     ];
@@ -1026,7 +1156,7 @@ function initAccessibility() {
       const nextTheme = isDark ? "light" : "dark";
       document.documentElement.setAttribute("data-theme", nextTheme);
       localStorage.setItem("ufabc_ui_theme", nextTheme);
-      if (document.getElementById("tabMapas").classList.contains("active")) {
+      const tabMapas = document.getElementById("tabMapas"); if (tabMapas && tabMapas.classList.contains("active")) {
         renderCurrentMindmap();
       }
     });

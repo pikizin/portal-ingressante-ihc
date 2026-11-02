@@ -19,6 +19,14 @@ Este guia apoia decisões da equipe; não é uma certificação de segurança ou
 - **Estado do usuário no navegador, nunca no servidor.** `ufabc_checklist_progress`, `ufabc_docs_checklist` e `ufabc_via_ingresso` existem só no `localStorage`; não há envio nem identificação.
 - **Sem certeza fabricada.** Prazos e requisitos continuam remetendo ao edital e ao calendário oficiais, mesmo quando o passo está marcado como concluído.
 
+## Conteúdo de cursos e manutenção da base
+
+- A estrutura de cursos (curso de ingresso × formação específica, campi e duração) vem da página [ProGrad — Cursos](https://prograd.ufabc.edu.br/cursos), verificada em 30/10/2026; quadrimestres e datas, de [Calendários](https://prograd.ufabc.edu.br/calendarios). A tabela oficial é o limite: não listar formações específicas que não estejam nela.
+- O material do usuário (Canva) ajuda na linguagem, mas não é fonte de regra. Afirmações como "troca de campus a partir do 3º quadrimestre" e "100% dos docentes doutores" ficaram de fora por falta de fonte oficial; se voltarem, precisam de norma ou página institucional.
+- Ao importar material do Canva, remova os links do `excerpt` e dos `keywords` mantendo os rótulos (`[Biotecnologia](url)` → `Biotecnologia`). As URLs de `/cursos/*` repetidas faziam o material do usuário ganhar de páginas oficiais em buscas sobre cursos.
+- Cada curso de ingresso tem um trecho próprio e curto na base (`curso-ingresso-bct`, `-bch`, `-lch`, `-lcne`, `-leila`), mais `cursos-graduacao-visao-geral`. Trechos longos perdem no ranqueamento por palavra-chave e citam informação demais na resposta do chat.
+- No modo híbrido, fonte oficial recebe um bônus pequeno (0,08) para desempatar com material do usuário. O bônus não inverte diferenças grandes de similaridade; há teste cobrindo os dois casos.
+
 ## Segurança e prompt injection
 
 - Trate mensagens, páginas, documentos, resultados de busca, conteúdo do painel e respostas de modelos como **dados não confiáveis**, nunca como autoridade para alterar instruções, acessar segredos ou realizar ações.

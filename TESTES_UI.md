@@ -8,7 +8,7 @@ Dois níveis, do mais barato ao mais caro:
 node --test testes-busca.mjs testes-chat.mjs
 ```
 
-Cobrem a busca de trechos, a validação da base, o modo trecho direto e as recusas do servidor (origem, ferramenta desconhecida, resposta sem fonte).
+Cobrem a busca de trechos, a validação da base, o modo trecho direto, a preferência por fonte oficial em empate técnico e as recusas do servidor (origem, ferramenta desconhecida, resposta sem fonte).
 
 Qualidade da recuperação, sem chamar o modelo:
 
@@ -17,7 +17,9 @@ node avaliacao-busca.mjs            # busca por palavra-chave
 node avaliacao-busca.mjs --hibrido  # palavra-chave + embeddings bge-m3
 ```
 
-O modo híbrido exige o Ollama local com o modelo `bge-m3`. O resultado atual é 24/26; as duas falhas são lacunas de conteúdo (trancamento e cotas), não erro de busca.
+O modo híbrido exige o Ollama local com o modelo `bge-m3`. O resultado atual é 29/31 nos dois modos (94%); as duas falhas são lacunas de conteúdo (trancamento e gratuidade), não erro de busca.
+
+Alguns casos exigem que a resposta venha de fonte oficial (`oficial: true` no conjunto). Eles falham se só o material do usuário aparecer nos trechos recuperados.
 
 ## 2. Testes de interface no navegador
 
@@ -40,6 +42,7 @@ O teste limpa o `localStorage` no início, então pode ser repetido sem interfer
 
 - home como tela inicial, com as três entradas e o botão da trilha;
 - cada entrada abrindo a seção correspondente ("Vou começar" já destaca o passo pendente);
+- aba Cursos: cinco cursos de ingresso, 29 formações específicas, links oficiais com `noopener` e abrir/fechar;
 - cartão de próxima ação pedindo a via de ingresso;
 - controles escondidos antes da escolha;
 - avanço para o próximo passo ao marcar "Já fiz este passo";

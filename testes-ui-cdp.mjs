@@ -100,11 +100,11 @@ checar('"Já enviei os documentos" abre a página de modalidades',
   `),
   'true');
 
-checar('"Tenho uma dúvida" abre o chat',
+checar('"Tenho uma dúvida" abre o FAQ',
   await evaluate(`
     document.querySelector('.nav-item-btn[data-target="tabHome"]').click();
     document.querySelector('[data-home-choice="duvida"]').click();
-    document.getElementById('tabChat').classList.contains('active');
+    document.getElementById('tabFaq').classList.contains('active');
   `),
   'true');
 
@@ -113,6 +113,41 @@ checar('botão "Ver a trilha completa" leva à trilha',
     document.querySelector('.nav-item-btn[data-target="tabHome"]').click();
     document.querySelector('.home-trail-btn').click();
     document.getElementById('tabChecklist').classList.contains('active');
+  `),
+  'true');
+
+const cursos = await evaluate(`
+  document.querySelector('.nav-item-btn[data-target="tabCursos"]').click();
+  JSON.stringify({
+    aberta: document.getElementById('tabCursos').classList.contains('active'),
+    cursos: document.querySelectorAll('#courseList details').length,
+    formacoes: document.querySelectorAll('#courseList .course-tags a').length,
+    bct: document.querySelectorAll('#curso_bct .course-tags a').length,
+    linksOficiais: Array.from(document.querySelectorAll('#courseList a')).every(a =>
+      a.href.startsWith('https://prograd.ufabc.edu.br/') && a.rel.includes('noopener'))
+  });
+`);
+checar('aba Cursos abre pela navegação', cursos, '"aberta":true');
+checar('lista os cinco cursos de ingresso', cursos, '"cursos":5');
+checar('soma 29 formações específicas', cursos, '"formacoes":29');
+checar('BC&T tem 16 formações listadas', cursos, '"bct":16');
+checar('todos os links de curso são oficiais e abrem sem opener', cursos, '"linksOficiais":true');
+
+checar('curso de ingresso abre e fecha',
+  await evaluate(`
+    const item = document.getElementById('curso_bch');
+    item.open = true;
+    const aberto = item.open && item.querySelectorAll('.course-tags a').length;
+    item.open = false;
+    JSON.stringify({ aberto, fechado: item.open });
+  `),
+  '"aberto":5');
+
+checar('atalho da trilha leva aos cursos',
+  await evaluate(`
+    document.querySelector('.nav-item-btn[data-target="tabChecklist"]').click();
+    document.querySelector('.start-actions [data-go-to="tabCursos"]').click();
+    document.getElementById('tabCursos').classList.contains('active');
   `),
   'true');
 

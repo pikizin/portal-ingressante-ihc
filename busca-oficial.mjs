@@ -120,9 +120,12 @@ export function createSearch(records, today = hoje, options = {}) {
       if (atual) atual.pontos += bonus;
       else pontuados.set(item.record.id, { record: item.record, pontos: bonus });
     }
+    // Empate técnico: fonte oficial ganha. O portal promete fonte oficial para conteúdo acadêmico.
+    for (const item of pontuados.values()) {
+      if (item.record.source_type === 'oficial') item.pontos += 0.08;
+    }
     const ordenados = [...pontuados.values()].sort((a, b) => b.pontos - a.pontos);
     if (!ordenados.length) return [];
-    // Não devolve trechos muito distantes do melhor resultado.
     const corte = ordenados[0].pontos * 0.5;
     return escolher(ordenados.filter(item => item.pontos >= corte).map(item => item.record));
   }
