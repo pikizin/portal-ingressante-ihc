@@ -137,3 +137,4 @@ Como a aplicação é 100% estática (`HTML`, `CSS`, `Vanilla JS`), a publicaç�
 2. No repositório no GitHub, acesse **Settings > Pages**.
 3. Em **Source**, selecione a branch `main` e a pasta `/ (root)`.
 4. O portal estará publicado e acessível publicamente via HTTPS.
+
